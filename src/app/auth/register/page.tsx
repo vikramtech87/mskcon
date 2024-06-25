@@ -1,15 +1,6 @@
 "use client";
 import FormCard from "@/components/form-card";
-import FormContainer from "@/components/form-container";
 import LoadingButton from "@/components/loading-button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import {
   Form,
   FormControl,
@@ -19,25 +10,77 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ToastAction } from "@/components/ui/toast";
+import { toast } from "@/components/ui/use-toast";
+import { useFormHandler } from "@/hooks/useFormHandler";
 import { useRegisterForm } from "@/hooks/useRegisterForm";
+import withGuest from "@/hooks/withGuest";
 import { RegisterFormData } from "@/schemas/register";
-import { useState } from "react";
+import { signUpWithEmailPassword } from "@/services/authentication";
+import { useStore } from "@/store/useStore";
+import { sendEmailVerification } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const form = useRegisterForm();
-  const { handleSubmit, control } = form;
-  const [isRegistering, setIsRegistering] = useState(false);
-  const onRegister = async (formData: RegisterFormData) => {
-    setIsRegistering(true);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
-    console.log(formData);
-    setIsRegistering(false);
-  };
+  const { authStore: auth, isAuthLoaded, isAuthenticated } = useStore();
+
+  console.table({
+    isAuthLoaded: isAuthLoaded(),
+    isAuthenticated: isAuthenticated(),
+  });
+
+  const { handleSubmit, control, reset } = form;
+  const router = useRouter();
+
+  const [isBusy, formHandler] = useFormHandler(
+    async ({ email, password }: RegisterFormData) => {
+      const signUpResult = await signUpWithEmailPassword(email, password);
+      if (!signUpResult.ok) {
+        const { error } = signUpResult;
+        if (error.code === "auth/email-exists") {
+          toast({
+            variant: "destructive",
+            title: "Email already exists!",
+            description: "User with email is already registerd",
+            action: (
+              <ToastAction
+                altText="login"
+                onClick={() => {
+                  reset();
+                  router.push("/auth/login");
+                  router.refresh();
+                }}
+              >
+                Login
+              </ToastAction>
+            ),
+          });
+        } else {
+          toast({
+            variant: "destructive",
+            title: "Unable to create account!",
+            description: "Please try again later",
+          });
+        }
+
+        return false;
+      }
+      const user = signUpResult.value;
+      await sendEmailVerification(user.user);
+
+      reset();
+      router.push("/");
+      router.refresh();
+
+      return true;
+    }
+  );
 
   return (
     <FormCard title="Register" description="Begin registration for MSKCon">
       <Form {...form}>
-        <form onSubmit={handleSubmit(onRegister)} className="space-y-4">
+        <form onSubmit={handleSubmit(formHandler)} className="space-y-4">
           <FormField
             control={control}
             name="email"
@@ -92,7 +135,7 @@ const Register = () => {
             )}
           />
           <div className="flex flex-col gap-2 pt-8">
-            <LoadingButton isLoading={isRegistering}>Register</LoadingButton>
+            <LoadingButton isLoading={isBusy}>Register</LoadingButton>
           </div>
         </form>
       </Form>
@@ -100,4 +143,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withGuest(Register);
