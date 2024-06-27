@@ -64,9 +64,7 @@ const PageHeader = () => {
         setAuth(undefined);
       } else {
         setAuth({
-          email: authUser.email!,
-          userId: authUser.uid,
-          isEmailVerified: authUser.emailVerified,
+          authUser,
         });
       }
     });

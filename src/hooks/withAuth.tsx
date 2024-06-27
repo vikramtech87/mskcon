@@ -7,10 +7,10 @@ export type WithAuthProps = {
   auth: AuthState;
 };
 
-const withAuth = <P extends Record<string, unknown>>(
+const WithAuth = <P extends object>(
   Component: React.ComponentType<P & WithAuthProps>
-): React.FC<P> => {
-  const componentWithAuth = (props: P) => {
+): React.ComponentType<P> => {
+  const ComponentWithAuth = (props: P) => {
     const { authStore: auth, isAuthLoaded } = useStore();
     if (!isAuthLoaded()) {
       return <CenterSpinner />;
@@ -20,9 +20,9 @@ const withAuth = <P extends Record<string, unknown>>(
       return <Unauthorized />;
     }
 
-    return <Component {...props} auth={auth.authState} />;
+    return <Component {...(props as P)} auth={auth.authState!} />;
   };
-  return componentWithAuth;
+  return ComponentWithAuth;
 };
 
-export default withAuth;
+export default WithAuth;

@@ -1,11 +1,13 @@
 "use client";
 
-import withAuth, { WithAuthProps } from "@/hooks/withAuth";
+import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
 import { logout } from "@/services/authentication";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 
-const LogoutPage = () => {
+type LogoutPageProps = {} & WithAuthProps;
+
+const LogoutPage = (props: LogoutPageProps) => {
   const router = useRouter();
 
   useEffect(() => {
@@ -16,9 +18,9 @@ const LogoutPage = () => {
     };
 
     execute();
-  }, []);
+  }, [router]);
 
   return <div>LogoutPage</div>;
 };
 
-export default withAuth(LogoutPage);
+export default WithAuth(LogoutPage);

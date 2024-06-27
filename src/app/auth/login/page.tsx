@@ -14,13 +14,15 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useLoginForm } from "@/hooks/useLoginForm";
-import withGuest from "@/hooks/withGuest";
+import WithGuest from "@/hooks/withGuest";
 import { LoginFormData } from "@/schemas/login";
 import { loginWithEmailAndPassword } from "@/services/authentication";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-const LoginPage = () => {
+type LoginPageProps = {};
+
+const LoginPage = (props: LoginPageProps) => {
   const form = useLoginForm();
   const { handleSubmit, control, reset } = form;
 
@@ -103,4 +105,4 @@ const LoginPage = () => {
   );
 };
 
-export default withGuest(LoginPage);
+export default WithGuest(LoginPage);

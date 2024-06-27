@@ -14,21 +14,15 @@ import { ToastAction } from "@/components/ui/toast";
 import { toast } from "@/components/ui/use-toast";
 import { useFormHandler } from "@/hooks/useFormHandler";
 import { useRegisterForm } from "@/hooks/useRegisterForm";
-import withGuest from "@/hooks/withGuest";
+import WithGuest from "@/hooks/withGuest";
 import { RegisterFormData } from "@/schemas/register";
 import { signUpWithEmailPassword } from "@/services/authentication";
-import { useStore } from "@/store/useStore";
-import { sendEmailVerification } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
-const Register = () => {
-  const form = useRegisterForm();
-  const { authStore: auth, isAuthLoaded, isAuthenticated } = useStore();
+type RegisterProps = {};
 
-  console.table({
-    isAuthLoaded: isAuthLoaded(),
-    isAuthenticated: isAuthenticated(),
-  });
+const Register = (props: RegisterProps) => {
+  const form = useRegisterForm();
 
   const { handleSubmit, control, reset } = form;
   const router = useRouter();
@@ -66,11 +60,9 @@ const Register = () => {
 
         return false;
       }
-      const user = signUpResult.value;
-      await sendEmailVerification(user.user);
 
       reset();
-      router.push("/");
+      router.push("/auth/verify-email");
       router.refresh();
 
       return true;
@@ -143,4 +135,4 @@ const Register = () => {
   );
 };
 
-export default withGuest(Register);
+export default WithGuest(Register);

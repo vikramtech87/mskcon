@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/components/container";
-import withAuth, { WithAuthProps } from "@/hooks/withAuth";
+import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
 import React from "react";
 
 type ProfilePageProps = {} & WithAuthProps;
@@ -9,11 +9,13 @@ type ProfilePageProps = {} & WithAuthProps;
 const ProfilePage = ({ auth }: ProfilePageProps) => {
   return (
     <Container>
-      <div>{auth.email}</div>
-      <div>{auth.userId}</div>
-      <div>{auth.isEmailVerified ? "Email verified" : "Email unverified"}</div>
+      <div>{auth.authUser.email}</div>
+      <div>{auth.authUser.uid}</div>
+      <div>
+        {auth.authUser.emailVerified ? "Email verified" : "Email unverified"}
+      </div>
     </Container>
   );
 };
 
-export default withAuth(ProfilePage);
+export default WithAuth(ProfilePage);

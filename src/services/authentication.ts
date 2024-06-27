@@ -9,6 +9,7 @@ import {
 import { Result, wrapInResult } from "@/lib/result";
 import { FirebaseError } from "firebase/app";
 import {
+  applyActionCode,
   checkActionCode,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -91,8 +92,7 @@ export const verifyEmail = async (
   oobCode: string
 ): Promise<Result<void, EmailVerificationError>> => {
   try {
-    const actionCodeInfo = await checkActionCode(auth, oobCode);
-    console.log(actionCodeInfo);
+    await applyActionCode(auth, oobCode);
     return {
       ok: true,
       value: undefined,
@@ -112,11 +112,11 @@ export const verifyEmail = async (
       } else {
         errorCode = "auth/unknown";
         console.error(
-          `Unknown firebase email verification code error: ${errorCode}`
+          `Unknown firebase email verification code error: ${error.code}`
         );
       }
     } else {
-      console.error(`Unknwn email verification error: ${errorCode}`);
+      console.error(`Unknown email verification error: ${error}`);
     }
 
     return {
