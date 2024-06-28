@@ -17,6 +17,7 @@ import { useRegisterForm } from "@/hooks/useRegisterForm";
 import WithGuest from "@/hooks/withGuest";
 import { RegisterFormData } from "@/schemas/register";
 import { signUpWithEmailPassword } from "@/services/authentication";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 type RegisterProps = {};
@@ -126,8 +127,11 @@ const Register = (props: RegisterProps) => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col gap-2 pt-8">
+          <div className="flex flex-col gap-4 pt-8">
             <LoadingButton isLoading={isBusy}>Register</LoadingButton>
+            <div className="text-right flex flex-col gap-2 underline">
+              <Link href="/auth/login">Already have an account?</Link>
+            </div>
           </div>
         </form>
       </Form>

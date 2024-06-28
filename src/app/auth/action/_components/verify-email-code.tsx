@@ -1,11 +1,10 @@
 import CenterSpinner from "@/components/center-spinner";
 import FormCard from "@/components/form-card";
+import { Button } from "@/components/ui/button";
 import { verifyEmail } from "@/services/authentication";
 import { useStore } from "@/store/useStore";
-import Link from "next/link";
-import React, { useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import EmailAlreadyVerified from "../../_components/email-already-verified";
-import { Button } from "@/components/ui/button";
 
 type VerifyEmailCodeProps = {
   code: string;

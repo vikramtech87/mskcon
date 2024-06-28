@@ -17,6 +17,7 @@ import { useLoginForm } from "@/hooks/useLoginForm";
 import WithGuest from "@/hooks/withGuest";
 import { LoginFormData } from "@/schemas/login";
 import { loginWithEmailAndPassword } from "@/services/authentication";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -58,7 +59,10 @@ const LoginPage = (props: LoginPageProps) => {
   );
 
   return (
-    <FormCard title="Sign In" description="Sign in to continue">
+    <FormCard
+      title="Sign In"
+      description="Sign in if you already created an account"
+    >
       <Form {...form}>
         <form onSubmit={handleSubmit(formHandler)} className="space-y-4">
           <FormField
@@ -96,8 +100,12 @@ const LoginPage = (props: LoginPageProps) => {
               </FormItem>
             )}
           />
-          <div className="flex flex-col gap-2 pt-8">
+          <div className="flex flex-col gap-4 pt-8">
             <LoadingButton isLoading={isBusy}>Sign In</LoadingButton>
+            <div className="text-right flex flex-col gap-2 underline">
+              <Link href="/auth/reset-password">Forgot password?</Link>
+              <Link href="/auth/register">Don't have an account?</Link>
+            </div>
           </div>
         </form>
       </Form>

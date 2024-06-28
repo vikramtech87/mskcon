@@ -3,10 +3,7 @@ export type LoginErrorCode =
   | "auth/invalid-credential"
   | "auth/unknown"
   | "unknown";
-export type EmailVerificationErrorCode =
-  | "auth/invalid-code"
-  | "auth/unknown"
-  | "unknown";
+export type OobCodeErrorCode = "auth/invalid-code" | "auth/unknown" | "unknown";
 
 export class AuthError extends Error {}
 
@@ -29,9 +26,18 @@ export class LoginError extends AuthError {
 }
 
 export class EmailVerificationError extends AuthError {
-  code: EmailVerificationErrorCode;
+  code: OobCodeErrorCode;
 
-  constructor(code: EmailVerificationErrorCode) {
+  constructor(code: OobCodeErrorCode) {
+    super(code);
+    this.code = code;
+  }
+}
+
+export class PasswordResetError extends AuthError {
+  code: OobCodeErrorCode;
+
+  constructor(code: OobCodeErrorCode) {
     super(code);
     this.code = code;
   }

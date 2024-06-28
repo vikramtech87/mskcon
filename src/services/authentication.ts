@@ -1,16 +1,18 @@
 import {
   EmailVerificationError,
-  EmailVerificationErrorCode,
+  OobCodeErrorCode,
   LoginError,
   LoginErrorCode,
   SignUpError,
   SignupErrorCode,
+  PasswordResetError,
 } from "@/lib/errors/authError";
 import { Result, wrapInResult } from "@/lib/result";
 import { FirebaseError } from "firebase/app";
 import {
   applyActionCode,
   checkActionCode,
+  confirmPasswordReset,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
@@ -98,7 +100,7 @@ export const verifyEmail = async (
       value: undefined,
     };
   } catch (error) {
-    let errorCode: EmailVerificationErrorCode = "unknown";
+    let errorCode: OobCodeErrorCode = "unknown";
 
     if (error instanceof FirebaseError) {
       const invalidCodeErrorCodes = [
@@ -122,6 +124,44 @@ export const verifyEmail = async (
     return {
       ok: false,
       error: new EmailVerificationError(errorCode),
+    };
+  }
+};
+
+export const performPasswordReset = async (
+  oobCode: string,
+  newPassword: string
+): Promise<Result<void, PasswordResetError>> => {
+  try {
+    await confirmPasswordReset(auth, oobCode, newPassword);
+    return {
+      ok: true,
+      value: undefined,
+    };
+  } catch (error) {
+    let errorCode: OobCodeErrorCode = "unknown";
+    if (error instanceof FirebaseError) {
+      const invalidCodeErrorCodes = [
+        "auth/expired-action-code",
+        "auth/invalid-action-code",
+        "auth/user-disabled",
+        "auth/user-not-found",
+      ];
+      if (invalidCodeErrorCodes.includes(error.code)) {
+        errorCode = "auth/invalid-code";
+      } else {
+        errorCode = "auth/unknown";
+        console.error(
+          `Unknown firebase email verification code error: ${error.code}`
+        );
+      }
+    } else {
+      console.error(`Unknown email verification error: ${error}`);
+    }
+
+    return {
+      ok: false,
+      error: new PasswordResetError(errorCode),
     };
   }
 };
