@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/services/firebase/client";
+import Header from "./_components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <PageHeader />
+        <Header />
         {children}
         <Toaster />
       </body>

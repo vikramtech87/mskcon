@@ -8,7 +8,8 @@ export type WithAuthProps = {
 };
 
 const WithAuth = <P extends object>(
-  Component: React.ComponentType<P & WithAuthProps>
+  Component: React.ComponentType<P & WithAuthProps>,
+  emailVerified: boolean = false
 ): React.ComponentType<P> => {
   const ComponentWithAuth = (props: P) => {
     const { authStore: auth, isAuthLoaded } = useStore();
@@ -17,6 +18,10 @@ const WithAuth = <P extends object>(
     }
 
     if (auth.authState === undefined) {
+      return <Unauthorized />;
+    }
+
+    if (emailVerified && !auth.authState.authUser.emailVerified) {
       return <Unauthorized />;
     }
 

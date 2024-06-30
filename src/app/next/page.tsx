@@ -1,7 +1,10 @@
+import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
 import React from "react";
 
-const Next = () => {
+type NextProps = {} & WithAuthProps;
+
+const Next = ({}: NextProps) => {
   return <div>Next</div>;
 };
 
-export default Next;
+export default WithAuth(Next);

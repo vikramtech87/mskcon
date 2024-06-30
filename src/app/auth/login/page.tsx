@@ -104,7 +104,7 @@ const LoginPage = (props: LoginPageProps) => {
             <LoadingButton isLoading={isBusy}>Sign In</LoadingButton>
             <div className="text-right flex flex-col gap-2 underline">
               <Link href="/auth/reset-password">Forgot password?</Link>
-              <Link href="/auth/register">Don't have an account?</Link>
+              <Link href="/auth/register">Do not have an account?</Link>
             </div>
           </div>
         </form>
