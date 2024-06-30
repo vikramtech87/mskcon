@@ -2,10 +2,11 @@ import { ProfileFormData, ProfileSchema } from "@/schemas/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
-export const useProfileForm = () =>
-  useForm<ProfileFormData>({
+export const useProfileForm = (defaultValues: ProfileFormData | undefined) => {
+  console.log(defaultValues);
+  return useForm<ProfileFormData>({
     resolver: zodResolver(ProfileSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       designation: "",
       title: "",
       firstName: "",
@@ -22,3 +23,4 @@ export const useProfileForm = () =>
       postalCode: "",
     },
   });
+};

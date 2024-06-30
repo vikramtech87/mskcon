@@ -1,12 +1,8 @@
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import PageHeader from "@/components/page-header";
-import { Toaster } from "@/components/ui/toaster";
-import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/services/firebase/client";
 import Header from "./_components/header";
+import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

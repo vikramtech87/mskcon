@@ -11,11 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
-import { auth } from "@/services/firebase/client";
+import { ProfileFormData } from "@/schemas/profile";
+import { auth, db } from "@/services/firebase/client";
 import { useStore } from "@/store/useStore";
 import { onAuthStateChanged } from "firebase/auth";
+import { doc, onSnapshot } from "firebase/firestore";
 import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Role = "Guest" | "User";
@@ -28,7 +31,8 @@ type Resource = {
 };
 
 const Header = () => {
-  const { setAuth, authStore, isAuthLoaded } = useStore();
+  const { setAuth, authStore, isAuthLoaded, setProfileLoading, setProfile } =
+    useStore();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -43,6 +47,26 @@ const Header = () => {
 
     return () => unsubscribe();
   }, [setAuth]);
+
+  useEffect(() => {
+    setProfileLoading();
+    const userId = authStore.authState?.authUser.uid;
+    if (userId === undefined) {
+      setProfile();
+      return;
+    }
+
+    const unsubscribe = onSnapshot(doc(db, "profile", userId), (doc) => {
+      if (!doc.exists) {
+        setProfile();
+        return;
+      }
+
+      setProfile(doc.data() as ProfileFormData | undefined);
+    });
+
+    return () => unsubscribe();
+  }, [authStore, setProfileLoading, setProfile]);
 
   const authEmail = authStore.authState?.authUser.email ?? undefined;
   const userRole: Role = authEmail === undefined ? "Guest" : "User";
@@ -206,16 +230,16 @@ const DesktopNav = ({
   const isAuthenticated = authEmail !== undefined;
 
   return (
-    <header className="bg-secondary hidden sm:block text-sm">
+    <header className="bg-secondary hidden sm:block text-sm font-medium">
       <Container>
         <nav className="flex items-center justify-between">
-          <div className="font-medium text-secondary-foreground">
+          <div className="font-bold text-secondary-foreground">
             <div>
               <Link href="/">MSKCon</Link>
             </div>
           </div>
 
-          <ul className="flex space-x-4 py-4">
+          <ul className="flex space-x-4 md:space-x-6 lg:space-x-8 py-4">
             {filteredResources.slice(1).map((resource) => (
               <li key={resource.key}>
                 <Link href={resource.url}>{resource.label}</Link>
@@ -246,7 +270,7 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
         <li>
           <Link
             href="/auth/register"
-            className={buttonVariants({ variant: "default" })}
+            className={buttonVariants({ variant: "default", size: "sm" })}
           >
             Register
           </Link>
@@ -257,16 +281,14 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
 
   return (
     <div className="flex space-x-4">
-      <Link
-        href="/registration/next"
-        className={cn(
-          buttonVariants({ variant: "default" }),
-          "hidden",
-          "md:block"
-        )}
-      >
-        Complete registration
-      </Link>
+      <div className="hidden md:block">
+        <Link
+          href="/registration/next"
+          className={cn(buttonVariants({ variant: "default", size: "sm" }))}
+        >
+          Complete registration
+        </Link>
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
           <User2 size={18} />
@@ -287,23 +309,6 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
-
-  return (
-    <ul className="flex flex-col space-y-4">
-      <li className="text-muted-foreground">{authEmail}</li>
-      <li>
-        <Link href="/auth/logout">Logout</Link>
-      </li>
-      <li>
-        <Link
-          href="/registration/next"
-          className={buttonVariants({ variant: "default" })}
-        >
-          Complete registration
-        </Link>
-      </li>
-    </ul>
   );
 };
 

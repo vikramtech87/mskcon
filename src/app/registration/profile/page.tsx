@@ -25,21 +25,24 @@ import { useProfileForm } from "@/hooks/useProfileForm";
 import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
 import { ProfileFormData } from "@/schemas/profile";
 import { saveProfile } from "@/services/user";
+import { useStore } from "@/store/useStore";
 import React, { useState } from "react";
 
 type ProfilePageProps = {} & WithAuthProps;
 
 const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
-  const form = useProfileForm();
+  const { profileState } = useStore((state) => state.profileStore);
+  const form = useProfileForm(profileState);
 
-  const { handleSubmit, control, reset, watch } = form;
+  const action = profileState === undefined ? "Save details" : "Update details";
+
+  const { handleSubmit, control, watch } = form;
 
   const [agreeTerms, setAgreeTerms] = useState(false);
 
   const [isBusy, formHandler] = useFormHandler(
     async (formData: ProfileFormData) => {
-      const result = await saveProfile(authUser.uid, formData);
-      console.log(result);
+      await saveProfile(authUser.uid, formData);
       return true;
     }
   );
@@ -86,7 +89,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
               <FormItem>
                 <FormLabel>Title</FormLabel>
                 <FormControl>
-                  <Input placeholder="Dr" {...field} />
+                  <Input placeholder="Eg: Dr" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -256,7 +259,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
                   <FormLabel>Country</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="India"
+                      placeholder="Eg: India"
                       {...field}
                       autoComplete="country-name"
                     />
@@ -273,7 +276,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
                   <FormLabel>Postal code</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="600001"
+                      placeholder="Eg: 600001"
                       {...field}
                       autoComplete="postal-code"
                     />
@@ -291,7 +294,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
                 <FormLabel>Mobile number &#40;optional&#41;</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="9876543210"
+                    placeholder="Eg: 9876543210"
                     {...field}
                     autoComplete="mobile tel"
                   />
@@ -305,6 +308,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
               <Checkbox
                 className="mt-1"
                 checked={agreeTerms}
+                disabled={isBusy}
                 onCheckedChange={() => setAgreeTerms((prev) => !prev)}
               />
               <div className="leading-0">
@@ -315,7 +319,7 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
           )}
           <div className="flex flex-col gap-4 pt-8">
             <LoadingButton isLoading={isBusy} disabled={isDisabled}>
-              Save details
+              {action}
             </LoadingButton>
           </div>
         </form>

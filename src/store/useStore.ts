@@ -1,3 +1,4 @@
+import { ProfileFormData } from "@/schemas/profile";
 import { User } from "firebase/auth";
 import { create } from "zustand";
 
@@ -10,11 +11,21 @@ type AuthStore = {
   authState?: AuthState;
 };
 
+type ProfileStore = {
+  isLoaded: boolean;
+  profileState?: ProfileFormData;
+};
+
 type Store = {
   authStore: AuthStore;
   isAuthLoaded: () => boolean;
   isAuthenticated: () => boolean;
   setAuth: (state?: AuthState) => void;
+
+  profileStore: ProfileStore;
+  isProfileLoaded: () => boolean;
+  setProfileLoading: () => void;
+  setProfile: (state?: ProfileFormData) => void;
 };
 
 export const useStore = create<Store>()((set, get) => ({
@@ -32,4 +43,24 @@ export const useStore = create<Store>()((set, get) => ({
       },
     }));
   },
+
+  profileStore: {
+    isLoaded: false,
+    profileState: undefined,
+  },
+  isProfileLoaded: () => get().profileStore.isLoaded,
+  setProfileLoading: () =>
+    set((state) => ({
+      profileStore: {
+        isLoaded: false,
+        profileState: undefined,
+      },
+    })),
+  setProfile: (state?: ProfileFormData) =>
+    set(() => ({
+      profileStore: {
+        isLoaded: true,
+        profileState: state,
+      },
+    })),
 }));

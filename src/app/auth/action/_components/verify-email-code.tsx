@@ -1,8 +1,10 @@
 import CenterSpinner from "@/components/center-spinner";
 import FormCard from "@/components/form-card";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import { verifyEmail } from "@/services/authentication";
 import { useStore } from "@/store/useStore";
+import { useRouter } from "next/navigation";
 import { useEffect, useReducer } from "react";
 import EmailAlreadyVerified from "../../_components/email-already-verified";
 
@@ -42,22 +44,33 @@ const VerifyEmailCode = ({ code }: VerifyEmailCodeProps) => {
     success: false,
   });
 
-  const { authStore } = useStore();
+  const { authStore, setAuth } = useStore();
+  const router = useRouter();
 
   const emailVerified = authStore.authState?.authUser.emailVerified ?? false;
 
   useEffect(() => {
     const verify = async () => {
       const result = await verifyEmail(code);
-      console.log(result);
       if (result.ok) {
         dispatch({ type: "successfulCompletion" });
+        toast({
+          title: "Email verified successfully",
+          description:
+            "Your email is successfully verified. Please login and complete the registration.",
+        });
       } else {
+        toast({
+          variant: "destructive",
+          title: "Error verifying email",
+          description: "Please login and try again later",
+        });
         dispatch({ type: "failureCompletion" });
       }
+      router.push("/auth/logout");
     };
     verify();
-  }, [dispatch, code]);
+  }, [dispatch, code, router]);
 
   if (emailVerified) {
     return <EmailAlreadyVerified />;
