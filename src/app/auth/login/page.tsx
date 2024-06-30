@@ -51,8 +51,8 @@ const LoginPage = (props: LoginPageProps) => {
       }
 
       reset();
-      router.push("/");
-      router.refresh();
+      // router.push("/");
+      // router.refresh();
 
       return true;
     }

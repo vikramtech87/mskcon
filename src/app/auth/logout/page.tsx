@@ -13,8 +13,8 @@ const LogoutPage = (props: LogoutPageProps) => {
   useEffect(() => {
     const execute = async () => {
       const _ = await logout();
-      router.push("/");
-      router.refresh();
+      // router.push("/");
+      // router.refresh();
     };
 
     execute();

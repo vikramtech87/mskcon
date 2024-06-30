@@ -63,8 +63,8 @@ const Register = (props: RegisterProps) => {
       }
 
       reset();
-      router.push("/auth/verify-email");
-      router.refresh();
+      // router.push("/auth/verify-email");
+      // router.refresh();
 
       return true;
     }

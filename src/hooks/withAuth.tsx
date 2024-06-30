@@ -1,7 +1,9 @@
+"use client";
+
 import CenterSpinner from "@/components/center-spinner";
-import Unauthorized from "@/components/unauthorized";
 import { AuthState, useStore } from "@/store/useStore";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 
 export type WithAuthProps = {
   auth: AuthState;
@@ -12,20 +14,38 @@ const WithAuth = <P extends object>(
   emailVerified: boolean = false
 ): React.ComponentType<P> => {
   const ComponentWithAuth = (props: P) => {
-    const { authStore: auth, isAuthLoaded } = useStore();
-    if (!isAuthLoaded()) {
+    const { isLoaded: isAuthLoaded, authState } = useStore(
+      (state) => state.authStore
+    );
+
+    const router = useRouter();
+    useEffect(() => {
+      if (authState === undefined) {
+        router.push("/");
+        router.refresh();
+        return;
+      }
+
+      if (emailVerified && !authState.authUser.emailVerified) {
+        router.push("/");
+        router.refresh();
+        return;
+      }
+    }, [router, authState]);
+
+    if (!isAuthLoaded) {
       return <CenterSpinner />;
     }
 
-    if (auth.authState === undefined) {
-      return <Unauthorized />;
+    if (authState === undefined) {
+      return <CenterSpinner />;
     }
 
-    if (emailVerified && !auth.authState.authUser.emailVerified) {
-      return <Unauthorized />;
+    if (emailVerified && !authState.authUser.emailVerified) {
+      return <CenterSpinner />;
     }
 
-    return <Component {...(props as P)} auth={auth.authState!} />;
+    return <Component {...(props as P)} auth={authState!} />;
   };
   return ComponentWithAuth;
 };

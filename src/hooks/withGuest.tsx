@@ -1,19 +1,31 @@
+"use client";
+
 import CenterSpinner from "@/components/center-spinner";
-import Unauthorized from "@/components/unauthorized";
 import { useStore } from "@/store/useStore";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const WithGuest = <P extends Record<string, unknown>>(
   Component: React.ComponentType<P>
 ): React.FC<P> => {
   const OnlyGuest: React.FC<P> = (props) => {
-    const { isAuthLoaded, isAuthenticated } = useStore();
+    const { isLoaded: isAuthLoaded, authState } = useStore(
+      (state) => state.authStore
+    );
+    const router = useRouter();
+    useEffect(() => {
+      if (isAuthLoaded && authState !== undefined) {
+        router.push("/");
+        router.refresh();
+      }
+    }, [isAuthLoaded, authState, router]);
 
-    if (!isAuthLoaded()) {
+    if (!isAuthLoaded) {
       return <CenterSpinner />;
     }
 
-    if (isAuthLoaded() && isAuthenticated()) {
-      return <Unauthorized />;
+    if (isAuthLoaded && authState !== undefined) {
+      return <CenterSpinner />;
     }
 
     return <Component {...props} />;
