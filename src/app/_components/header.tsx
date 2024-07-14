@@ -31,8 +31,15 @@ type Resource = {
 };
 
 const Header = () => {
-  const { setAuth, authStore, isAuthLoaded, setProfileLoading, setProfile } =
-    useStore();
+  const {
+    setAuth,
+    authStore,
+    isAuthLoaded,
+    setProfileLoading,
+    setProfile,
+    setMealLoading,
+    setMeal,
+  } = useStore();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
@@ -68,6 +75,28 @@ const Header = () => {
     return () => unsubscribe();
   }, [authStore, setProfileLoading, setProfile]);
 
+  useEffect(() => {
+    setMealLoading();
+    const userId = authStore.authState?.authUser.uid;
+    if (userId === undefined) {
+      setMeal();
+      return;
+    }
+
+    const unsubscribe = onSnapshot(doc(db, "meal", userId), (doc) => {
+      if (!doc.exists) {
+        setMeal();
+        return;
+      }
+
+      const { preference } = doc.data() as { preference: "veg" | "non-veg" };
+
+      setMeal(preference);
+    });
+
+    return () => unsubscribe();
+  }, [authStore, setMealLoading, setMeal]);
+
   const authEmail = authStore.authState?.authUser.email ?? undefined;
   const userRole: Role = authEmail === undefined ? "Guest" : "User";
 
@@ -96,13 +125,13 @@ const Header = () => {
     {
       label: "Accomodation",
       roles: everyOne,
-      url: "/accomodation",
+      url: "/registration/meals",
       key: "accomodation",
     },
     {
       label: "Posters",
       roles: onlyUser,
-      url: "/posters",
+      url: "/registration/profile",
       key: "posters",
     },
   ];

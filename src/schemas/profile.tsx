@@ -7,7 +7,7 @@ export const ProfileSchema = z.object({
   title: z
     .string({ required_error: "Title is required" })
     .min(1, "Titile is required")
-    .max(5, "Title is too long"),
+    .max(20, "Title is too long"),
   firstName: z
     .string({ required_error: "First name is required" })
     .min(1, "First name is required")

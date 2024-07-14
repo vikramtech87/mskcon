@@ -51,9 +51,8 @@ const LoginPage = (props: LoginPageProps) => {
       }
 
       reset();
-      // router.push("/");
-      // router.refresh();
-
+      router.push("/registration/next");
+      router.refresh();
       return true;
     }
   );

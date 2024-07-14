@@ -11,15 +11,16 @@ type NextPageProps = {} & WithAuthProps;
 const NextPage = ({ auth: { authUser } }: NextPageProps) => {
   const router = useRouter();
 
-  const { isLoaded: isProfileLoaded, profileState } = useStore(
-    (state) => state.profileStore
-  );
+  const { profileStore, mealStore } = useStore();
 
   useEffect(() => {
     if (!authUser.emailVerified) {
       router.push("/auth/verify-email");
       return;
     }
+
+    const { isLoaded: isProfileLoaded, profileState } = profileStore;
+    const { isLoaded: isMealLoaded, mealState } = mealStore;
 
     if (
       authUser.emailVerified &&
@@ -30,8 +31,16 @@ const NextPage = ({ auth: { authUser } }: NextPageProps) => {
       return;
     }
 
-    router.push("/registration/profile");
-  }, [router, authUser, isProfileLoaded, profileState]);
+    if (profileState !== undefined && mealState === undefined) {
+      router.push("/registration/meals");
+      return;
+    }
+
+    if (mealState !== undefined) {
+      router.push("/registration/workshop");
+      return;
+    }
+  }, [router, authUser, profileStore, mealStore]);
 
   return <CenterSpinner message="Determining your next step" />;
 };
