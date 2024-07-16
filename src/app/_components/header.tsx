@@ -39,6 +39,8 @@ const Header = () => {
     setProfile,
     setMealLoading,
     setMeal,
+    setWorkshopLoading,
+    setWorkshop,
   } = useStore();
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const Header = () => {
     }
 
     const unsubscribe = onSnapshot(doc(db, "profile", userId), (doc) => {
-      if (!doc.exists) {
+      if (!doc.exists()) {
         setProfile();
         return;
       }
@@ -84,7 +86,7 @@ const Header = () => {
     }
 
     const unsubscribe = onSnapshot(doc(db, "meal", userId), (doc) => {
-      if (!doc.exists) {
+      if (!doc.exists()) {
         setMeal();
         return;
       }
@@ -96,6 +98,27 @@ const Header = () => {
 
     return () => unsubscribe();
   }, [authStore, setMealLoading, setMeal]);
+
+  useEffect(() => {
+    setWorkshopLoading();
+    const userId = authStore.authState?.authUser.uid;
+    if (userId === undefined) {
+      setWorkshop();
+      return;
+    }
+
+    const unsubscribe = onSnapshot(doc(db, "workshop", userId), (doc) => {
+      if (!doc.exists()) {
+        setWorkshop();
+        return;
+      }
+
+      const { workshopId } = doc.data() as { workshopId: string };
+      setWorkshop({ workshopId });
+    });
+
+    return () => unsubscribe();
+  }, [authStore, setWorkshopLoading, setWorkshop]);
 
   const authEmail = authStore.authState?.authUser.email ?? undefined;
   const userRole: Role = authEmail === undefined ? "Guest" : "User";
@@ -125,7 +148,7 @@ const Header = () => {
     {
       label: "Accomodation",
       roles: everyOne,
-      url: "/registration/meals",
+      url: "/accomodation",
       key: "accomodation",
     },
     {

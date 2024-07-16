@@ -24,6 +24,13 @@ type MealStore = {
   };
 };
 
+type WorkshopStore = {
+  isLoaded: boolean;
+  workshopState?: {
+    workshopId: string;
+  };
+};
+
 type Store = {
   authStore: AuthStore;
   isAuthLoaded: () => boolean;
@@ -39,6 +46,11 @@ type Store = {
   isMealLoaded: () => boolean;
   setMealLoading: () => void;
   setMeal: (preference?: "veg" | "non-veg") => void;
+
+  workshopStore: WorkshopStore;
+  isWorkshopLoaded: () => boolean;
+  setWorkshopLoading: () => void;
+  setWorkshop: (state?: { workshopId: string }) => void;
 };
 
 export const useStore = create<Store>()((set, get) => ({
@@ -108,4 +120,24 @@ export const useStore = create<Store>()((set, get) => ({
         },
       };
     }),
+
+  workshopStore: {
+    isLoaded: false,
+    workshopState: undefined,
+  },
+  isWorkshopLoaded: () => get().workshopStore.isLoaded,
+  setWorkshopLoading: () =>
+    set(() => ({
+      workshopStore: {
+        isLoaded: false,
+        workshopState: undefined,
+      },
+    })),
+  setWorkshop: (state?: { workshopId: string }) =>
+    set(() => ({
+      workshopStore: {
+        isLoaded: true,
+        workshopState: state,
+      },
+    })),
 }));

@@ -1,5 +1,6 @@
 import { replaceTokens } from "@/lib/utilfuncs";
 import newPaymentRequestXml from "./templates/new-payment";
+import { DateTime } from "luxon";
 
 type Towards = "Registration" | "Registration, Workshop";
 type PaymentOptions = "HDFC" | "PAYU";
@@ -46,4 +47,31 @@ const getAuthorizedTemplate = (templateString: string) => {
     ConferenceCode: ConferenceCode!,
   };
   return replaceTokens(templateString, replacements);
+};
+
+export const expectedPayment = (
+  postgraduate: boolean,
+  workshop: boolean
+): { workshop: number; isEarlyBird: boolean; conference: number } => {
+  const workshopAmount = workshop ? 2500 : 0;
+
+  const earlyBirdDeadLine = DateTime.fromISO("2024-10-01");
+  const now = DateTime.now();
+
+  const isEarlyBird = now < earlyBirdDeadLine;
+
+  let conferenceAmount = 2510;
+  if (postgraduate) {
+    if (!isEarlyBird) {
+      conferenceAmount = 3690;
+    }
+  } else {
+    conferenceAmount = isEarlyBird ? 3100 : 4280;
+  }
+
+  return {
+    conference: conferenceAmount,
+    isEarlyBird,
+    workshop: workshopAmount,
+  };
 };

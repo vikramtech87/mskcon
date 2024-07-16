@@ -1,48 +1,24 @@
 "use client";
 
 import CenterSpinner from "@/components/center-spinner";
-import FormCard from "@/components/form-card";
+import { type WorkshopData } from "@/lib/workshop-data";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import WorkshopOptions from "./_components/workshop-options";
-import { type WorkshopData } from "@/lib/workshop-data";
+import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
+import { saveWorkshopPreference } from "@/services/user";
+import { getAllWorkshopOptions } from "@/services/workshop";
 
-const workshopOptions: WorkshopData[] = [
-  {
-    title: "Gross specimens",
-    description:
-      "Feast your eyes on a plethora of gross specimens wiht corresponding histopathology",
-    workshopId: "ws-gross",
-    totalSeats: 10,
-  },
-  {
-    title: "FISH & PCR",
-    description: "Learn to interpret FISH/PCR in bone and soft tissue tumors",
-    workshopId: "ws-fish",
-    totalSeats: 10,
-  },
-  {
-    title: "Musculoskeletal radiology",
-    description:
-      "Understand the basics of interpreting Musculoskeletal radiology",
-    workshopId: "ws-radiology",
-    totalSeats: 10,
-  },
-  {
-    title: "None",
-    description: "Only registering for conference. Not interested in workshop",
-    workshopId: "ws-none",
-    totalSeats: 9999,
-  },
-];
+type WorkshopPageProps = {} & WithAuthProps;
 
-const WorkshopPage = () => {
+const WorkshopPage = ({ auth }: WorkshopPageProps) => {
   const { isLoaded: isMealLoaded, mealState } = useStore(
     (state) => state.mealStore
   );
 
   const router = useRouter();
+  const [isBusy, setIsBusy] = useState(false);
 
   useEffect(() => {
     if (isMealLoaded && mealState === undefined) {
@@ -51,11 +27,24 @@ const WorkshopPage = () => {
     }
   }, [isMealLoaded, mealState, router]);
 
+  const handleSubmit = async (workshopId: string) => {
+    setIsBusy(true);
+    const result = await saveWorkshopPreference(auth.authUser.uid, workshopId);
+    router.push("/registration/next");
+    router.refresh();
+  };
+
   if (!isMealLoaded) {
     return <CenterSpinner />;
   }
 
-  return <WorkshopOptions options={workshopOptions} />;
+  return (
+    <WorkshopOptions
+      options={getAllWorkshopOptions()}
+      isBusy={isBusy}
+      onSubmit={handleSubmit}
+    />
+  );
 };
 
-export default WorkshopPage;
+export default WithAuth(WorkshopPage);

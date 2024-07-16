@@ -1,21 +1,39 @@
-import FormCard from "@/components/form-card";
-import ListItem from "@/components/list-item";
-import { Badge } from "@/components/ui/badge";
-import clsx from "clsx";
-import React, { useState } from "react";
-import WorkshopOption from "./workshop-option";
-import { WorkshopData } from "@/lib/workshop-data";
+"use client";
+
 import FormAction from "@/components/form-action";
+import FormCard from "@/components/form-card";
 import LoadingButton from "@/components/loading-button";
+import { WorkshopData } from "@/lib/workshop-data";
+import { useEffect, useState } from "react";
+import WorkshopOption from "./workshop-option";
+import { useStore } from "@/store/useStore";
 
 type WorkshopOptionsProps = {
   options: WorkshopData[];
+  isBusy: boolean;
+  onSubmit: (workshopId: string) => void;
 };
 
-const WorkshopOptions = ({ options }: WorkshopOptionsProps) => {
+const WorkshopOptions = ({
+  options,
+  isBusy,
+  onSubmit,
+}: WorkshopOptionsProps) => {
   const [selectedOption, setSelectedOption] = useState<string | undefined>(
     undefined
   );
+
+  const { workshopState } = useStore((state) => state.workshopStore);
+
+  useEffect(() => {
+    if (workshopState === undefined) {
+      return;
+    }
+
+    setSelectedOption(workshopState.workshopId);
+  }, [workshopState]);
+
+  const disabled = selectedOption === undefined || isBusy;
 
   return (
     <FormCard
@@ -37,8 +55,9 @@ const WorkshopOptions = ({ options }: WorkshopOptionsProps) => {
       </ul>
       <FormAction>
         <LoadingButton
-          isLoading={false}
-          disabled={selectedOption === undefined}
+          isLoading={isBusy}
+          disabled={disabled}
+          onClick={() => onSubmit(selectedOption!)}
         >
           Update Workshop preference
         </LoadingButton>

@@ -36,3 +36,10 @@ export const drill = (obj: Record<string, any>, drillProps: string[]): any => {
 
   return drill(obj[currentKey], drillProps.slice(1));
 };
+
+export const toAmount = (value: number) =>
+  value.toLocaleString("en-IN", {
+    maximumFractionDigits: 2,
+    style: "currency",
+    currency: "INR",
+  });
