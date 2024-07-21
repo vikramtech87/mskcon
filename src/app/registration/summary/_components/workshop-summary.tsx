@@ -18,7 +18,7 @@ const WorkshopSummary = ({ selectedWorkshop }: WorkshopSummaryProps) => {
         <SummaryItem prompt="Seats left">
           <span>10</span>
           <br />
-          <span className="text-red-600">
+          <span className="text-red-600 text-xs">
             Workshop seat confirmation is subject to availability at the time of
             payment
           </span>

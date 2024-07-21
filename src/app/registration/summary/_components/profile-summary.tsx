@@ -36,7 +36,7 @@ const ProfileSummary = ({ data }: ProfileSummaryProps) => {
         {designation === "postgraduate" && (
           <>
             <br />
-            <span className="text-red-600">
+            <span className="text-red-600 text-xs">
               Bonafide certificate is required on the day of conference
             </span>
           </>

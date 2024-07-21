@@ -58,7 +58,7 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
       title="Summary"
       description="Please review and confirm the details. Once payment is made, changes are not entertained"
     >
-      <div className="flex flex-col space-y-6">
+      <div className="flex flex-col space-y-8">
         <ProfileSummary data={profileState} />
         <MealSummary preference={mealState.preference} />
         <WorkshopSummary selectedWorkshop={workshopData} />

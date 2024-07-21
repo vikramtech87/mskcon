@@ -1,3 +1,7 @@
+import { ZodSchema } from "zod";
+import { Result } from "./result";
+import { BodyParseError } from "./errors/bodyParseError";
+
 export const registerNumber = () => {
   const length = 18;
   const moment = Date.now().toString();
@@ -43,3 +47,31 @@ export const toAmount = (value: number) =>
     style: "currency",
     currency: "INR",
   });
+
+export const parseRequestBody = async <T>(
+  request: Request,
+  schema: ZodSchema<T>
+): Promise<Result<T, BodyParseError>> => {
+  try {
+    const data = await request.json();
+
+    const result = schema.safeParse(data);
+    if (result.success) {
+      return {
+        ok: true,
+        value: result.data,
+      };
+    }
+
+    return {
+      ok: false,
+      error: new BodyParseError("body-parse/invalid-data"),
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      ok: false,
+      error: new BodyParseError("body-parse/cannot-parse"),
+    };
+  }
+};

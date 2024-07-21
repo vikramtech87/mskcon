@@ -19,7 +19,7 @@ const InitiatePaymentPage = async () => {
   const url = process.env.PaymentServiceLink!;
 
   const response = await fetch(
-    "https://clin.cmcvellore.ac.in/newconference/ConferencePay.asmx",
+    "https://clin.cmcvellore.ac.in/testconference/ConferencePay.asmx",
     {
       method: "POST",
       body: xml,
@@ -40,6 +40,8 @@ const InitiatePaymentPage = async () => {
     "DocumentElement",
     "conferencepay",
   ]);
+
+  console.log(result["Transid"]);
   return JSON.stringify(result);
 };
 
