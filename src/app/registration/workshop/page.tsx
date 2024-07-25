@@ -1,14 +1,15 @@
 "use client";
 
 import CenterSpinner from "@/components/center-spinner";
-import { type WorkshopData } from "@/lib/workshop-data";
+import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
+import {
+  getAllWorkshopOptions,
+  saveWorkshopPreference,
+} from "@/services/workshop";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import WorkshopOptions from "./_components/workshop-options";
-import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
-import { saveWorkshopPreference } from "@/services/user";
-import { getAllWorkshopOptions } from "@/services/workshop";
 
 type WorkshopPageProps = {} & WithAuthProps;
 
@@ -30,6 +31,8 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
   const handleSubmit = async (workshopId: string) => {
     setIsBusy(true);
     const result = await saveWorkshopPreference(auth.authUser.uid, workshopId);
+
+    // TODO: Hanlde result
     router.push("/registration/next");
     router.refresh();
   };

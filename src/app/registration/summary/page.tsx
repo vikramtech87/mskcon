@@ -3,39 +3,67 @@
 import CenterSpinner from "@/components/center-spinner";
 import FormCard from "@/components/form-card";
 import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
+import { PaymentInvoiceResponse } from "@/schemas/paymentInvoiceResponse";
+import { fetchPaymentInfo } from "@/services/api";
 import { getWorkshopData } from "@/services/workshop";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import MealSummary from "./_components/meal-summary";
+import PaymentModeSelector from "./_components/payment-mode";
 import PaymentSummary from "./_components/payment-summary";
 import ProfileSummary from "./_components/profile-summary";
 import WorkshopSummary from "./_components/workshop-summary";
-import PaymentMode from "./_components/payment-mode";
 
 type SummaryPageProps = {} & WithAuthProps;
 
 const SummaryPage = ({ auth }: SummaryPageProps) => {
   const { profileStore, mealStore, workshopStore } = useStore();
+  const [paymentInfo, setPaymentInfo] = useState<
+    PaymentInvoiceResponse | undefined
+  >(undefined);
 
   const router = useRouter();
 
-  useEffect(() => {
-    const { workshopState, isLoaded } = workshopStore;
+  const { workshopState, isLoaded: isWorkshopLoaded } = workshopStore;
+  const { profileState, isLoaded: isProfileLoaded } = profileStore;
+  const { mealState } = mealStore;
 
-    if (isLoaded && workshopState === undefined) {
+  const isWorkshop = workshopState?.workshopId !== "ws-none";
+  const isPostgraduate = profileState?.designation === "postgraduate";
+
+  useEffect(() => {
+    if (isWorkshopLoaded && workshopState === undefined) {
       router.push("/registration/next");
       return;
     }
-  }, [workshopStore, router]);
 
-  if (!workshopStore.isLoaded) {
+    if (isProfileLoaded && profileState === undefined) {
+      router.push("/registration/next");
+      return;
+    }
+
+    const loadData = async () => {
+      const result = await fetchPaymentInfo({ isPostgraduate, isWorkshop });
+      if (result.ok) {
+        setPaymentInfo(result.value);
+      }
+    };
+
+    loadData();
+  }, [
+    isWorkshopLoaded,
+    workshopState,
+    isProfileLoaded,
+    profileState,
+    isWorkshop,
+    isPostgraduate,
+    router,
+  ]);
+
+  if (!workshopStore.isLoaded || paymentInfo === undefined) {
     return <CenterSpinner />;
   }
-
-  const { profileState } = profileStore;
-  const { mealState } = mealStore;
-  const { workshopState } = workshopStore;
 
   if (
     workshopState === undefined ||
@@ -50,8 +78,8 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
     throw new Error("Invalid workshop id");
   }
 
-  const isPostgraduate = profileState?.designation === "postgraduate";
-  const workshop = workshopState?.workshopId !== "ws-none";
+  const { firstName, lastName, registerNumber } = profileState;
+  const name = `${firstName} ${lastName}`;
 
   return (
     <FormCard
@@ -62,8 +90,18 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
         <ProfileSummary data={profileState} />
         <MealSummary preference={mealState.preference} />
         <WorkshopSummary selectedWorkshop={workshopData} />
-        <PaymentSummary isPostgraduate={isPostgraduate} workshop={workshop} />
-        <PaymentMode />
+        <PaymentSummary
+          conferenceAmount={paymentInfo.conference}
+          isEarlyBird={paymentInfo.isEarlyBird}
+          workshopAmount={paymentInfo.workshop}
+        />
+        <PaymentModeSelector
+          isPostgraduate={isPostgraduate}
+          isWorkshop={isWorkshop}
+          name={name}
+          registerNumber={registerNumber}
+          userId={auth.authUser.uid}
+        />
       </div>
     </FormCard>
   );

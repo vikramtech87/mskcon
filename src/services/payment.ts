@@ -8,6 +8,8 @@ import { ZodSchema } from "zod";
 import { Result } from "@/lib/result";
 import { SoapError } from "@/lib/errors/soapError";
 import { XMLParser } from "fast-xml-parser";
+import statusXml from "./templates/status";
+import { SoapPaymentTransactionStatusSchema } from "@/schemas/soapPaymentStatus";
 
 export type NewPaymentRequest = {
   bankName: PaymentMode;
@@ -17,7 +19,7 @@ export type NewPaymentRequest = {
   towards: string;
 };
 
-export const getNewPaymentXml = ({
+const getNewPaymentXml = ({
   bankName,
   registerNumber,
   candidateName,
@@ -33,6 +35,28 @@ export const getNewPaymentXml = ({
   };
 
   const authorizedTemplate = getAuthorizedTemplate(newPaymentRequestXml);
+
+  return replaceTokens(authorizedTemplate, replacements);
+};
+
+type PaymentStatusRequest = {
+  bankName: PaymentMode;
+  registerNumber: string;
+  transactionId: string;
+};
+
+const getPaymentStatusXml = ({
+  registerNumber,
+  bankName,
+  transactionId,
+}: PaymentStatusRequest) => {
+  const replacements = {
+    BankName: bankName,
+    TransactionId: transactionId,
+    RegistrationNumber: registerNumber,
+  };
+
+  const authorizedTemplate = getAuthorizedTemplate(statusXml);
 
   return replaceTokens(authorizedTemplate, replacements);
 };
@@ -53,24 +77,34 @@ const getAuthorizedTemplate = (templateString: string) => {
   return replaceTokens(templateString, replacements);
 };
 
-export const expectedPayment = (
-  postgraduate: boolean,
-  workshop: boolean
-): PaymentInvoiceResponse => {
-  const workshopAmount = workshop ? 2500 : 0;
+export const expectedPayment = ({
+  isPostgraduate,
+  isWorkshop,
+}: {
+  isPostgraduate: boolean;
+  isWorkshop: boolean;
+}): PaymentInvoiceResponse => {
+  const envWorkshop = parseInt(process.env.Workshop!);
+  const envPostgraduate = parseInt(process.env.Postgraduate!);
+  const envPostgraduateEarly = parseInt(process.env.PostgraduateEarly!);
+  const envConsultant = parseInt(process.env.Consultant!);
+  const envConsultantEarly = parseInt(process.env.ConsultantEarly!);
+  const envEarlyBirdDate = process.env.EarlyBirdDate!;
 
-  const earlyBirdDeadLine = DateTime.fromISO("2024-10-01");
+  const workshopAmount = isWorkshop ? envWorkshop : 0;
+
+  const earlyBirdDeadLine = DateTime.fromISO(envEarlyBirdDate);
   const now = DateTime.now();
 
   const isEarlyBird = now < earlyBirdDeadLine;
 
-  let conferenceAmount = 2510;
-  if (postgraduate) {
+  let conferenceAmount = envPostgraduateEarly;
+  if (isPostgraduate) {
     if (!isEarlyBird) {
-      conferenceAmount = 3690;
+      conferenceAmount = envPostgraduate;
     }
   } else {
-    conferenceAmount = isEarlyBird ? 3100 : 4280;
+    conferenceAmount = isEarlyBird ? envConsultantEarly : envConsultant;
   }
 
   return {
@@ -120,9 +154,20 @@ export const getPaymentLink = async ({
   return await sendSoap(xml, SoapPaymentLinkSchema);
 };
 
+export const getTransactionStatus = async (data: {
+  registerNumber: string;
+  bankName: PaymentMode;
+  transactionId: string;
+}) => {
+  const xml = getPaymentStatusXml(data);
+
+  return await sendSoap(xml, SoapPaymentTransactionStatusSchema, "STATUS");
+};
+
 export const sendSoap = async <T extends { ResultCode: string }>(
   xml: string,
-  schema: ZodSchema<T>
+  schema: ZodSchema<T>,
+  action: "NEWPAY" | "STATUS" = "NEWPAY"
 ): Promise<Result<T, SoapError>> => {
   const headers = new Headers();
   headers.append("Content-Type", "text/xml");
@@ -140,15 +185,31 @@ export const sendSoap = async <T extends { ResultCode: string }>(
     const responseText = await response.text();
     const parser = new XMLParser();
     const doc = parser.parse(responseText);
-    const data = drill(doc, [
-      "soap:Envelope",
-      "soap:Body",
-      "NEWCONFONLINEPAYSAVEResponse",
-      "NEWCONFONLINEPAYSAVEResult",
+
+    let drillProps = ["soap:Envelope", "soap:Body"];
+
+    if (action === "NEWPAY") {
+      drillProps = [
+        ...drillProps,
+        "NEWCONFONLINEPAYSAVEResponse",
+        "NEWCONFONLINEPAYSAVEResult",
+      ];
+    } else {
+      drillProps = [
+        ...drillProps,
+        "CONFONLINEPAYSTATUSResponse",
+        "CONFONLINEPAYSTATUSResult",
+      ];
+    }
+
+    drillProps = [
+      ...drillProps,
       "diffgr:diffgram",
       "DocumentElement",
       "conferencepay",
-    ]);
+    ];
+
+    const data = drill(doc, drillProps);
     const parseResult = schema.safeParse(data);
     if (!parseResult.success) {
       return {

@@ -14,7 +14,7 @@ type AuthStore = {
 
 type ProfileStore = {
   isLoaded: boolean;
-  profileState?: ProfileFormData;
+  profileState?: ProfileFormData & { registerNumber: string };
 };
 
 type MealStore = {
@@ -40,7 +40,7 @@ type Store = {
   profileStore: ProfileStore;
   isProfileLoaded: () => boolean;
   setProfileLoading: () => void;
-  setProfile: (state?: ProfileFormData) => void;
+  setProfile: (state?: ProfileFormData & { registerNumber: string }) => void;
 
   mealStore: MealStore;
   isMealLoaded: () => boolean;
@@ -81,7 +81,7 @@ export const useStore = create<Store>()((set, get) => ({
         profileState: undefined,
       },
     })),
-  setProfile: (state?: ProfileFormData) =>
+  setProfile: (state?: ProfileFormData & { registerNumber: string }) =>
     set(() => ({
       profileStore: {
         isLoaded: true,

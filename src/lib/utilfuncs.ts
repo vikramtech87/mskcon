@@ -1,6 +1,7 @@
 import { ZodSchema } from "zod";
 import { Result } from "./result";
 import { BodyParseError } from "./errors/bodyParseError";
+import { DocumentData, DocumentReference, getDoc } from "firebase/firestore";
 
 export const registerNumber = () => {
   const length = 18;
@@ -72,6 +73,29 @@ export const parseRequestBody = async <T>(
     return {
       ok: false,
       error: new BodyParseError("body-parse/cannot-parse"),
+    };
+  }
+};
+
+export const docExists = async (
+  docRef: DocumentReference<DocumentData, DocumentData>
+): Promise<Result<boolean, any>> => {
+  try {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return {
+        ok: true,
+        value: true,
+      };
+    }
+    return {
+      ok: true,
+      value: false,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error,
     };
   }
 };

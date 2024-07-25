@@ -18,7 +18,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
 import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Role = "Guest" | "User";
@@ -71,7 +70,9 @@ const Header = () => {
         return;
       }
 
-      setProfile(doc.data() as ProfileFormData | undefined);
+      setProfile(
+        doc.data() as (ProfileFormData & { registerNumber: string }) | undefined
+      );
     });
 
     return () => unsubscribe();

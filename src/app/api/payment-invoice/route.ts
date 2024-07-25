@@ -12,7 +12,7 @@ export async function POST(request: Request) {
 
   const { isWorkshop, isPostgraduate } = result.value;
 
-  const data = expectedPayment(isPostgraduate, isWorkshop);
+  const data = expectedPayment({ isPostgraduate, isWorkshop });
 
   return new Response(JSON.stringify(data), { status: 200 });
 }

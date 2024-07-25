@@ -54,7 +54,8 @@ export async function POST(request: Request) {
     );
   }
 
-  return new Response(JSON.stringify(soapResult.value), {
+  const soapData = soapResult.value;
+  return new Response(JSON.stringify({ ...soapData, Amount: amount }), {
     status: 200,
   });
 }

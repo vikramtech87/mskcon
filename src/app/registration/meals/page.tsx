@@ -5,7 +5,7 @@ import FormAction from "@/components/form-action";
 import FormCard from "@/components/form-card";
 import ListItem from "@/components/list-item";
 import LoadingButton from "@/components/loading-button";
-import { saveMealPreference } from "@/services/user";
+import { saveMealPreference } from "@/services/meal";
 import { useStore } from "@/store/useStore";
 import { Drumstick, Leaf } from "lucide-react";
 import { useRouter } from "next/navigation";

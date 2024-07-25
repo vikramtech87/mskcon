@@ -12,7 +12,7 @@ const statusXml = `<?xml version="1.0" encoding="utf-8"?>
 			<regno>{{RegistrationNumber}}</regno>
 			<transid>{{TransactionId}}</transid>
 			<conference>{{ConferenceCode}}</conference>
-			<confyear>2023</confyear>
+			<confyear>2024</confyear>
 			<bankname>{{BankName}}</bankname>
 		</CONFONLINEPAYSTATUS>
 	</soap:Body>

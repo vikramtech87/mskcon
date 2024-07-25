@@ -20,18 +20,18 @@ const WithAuth = <P extends object>(
 
     const router = useRouter();
     useEffect(() => {
-      if (authState === undefined) {
+      if (isAuthLoaded && authState === undefined) {
         router.push("/");
         router.refresh();
         return;
       }
 
-      if (emailVerified && !authState.authUser.emailVerified) {
+      if (emailVerified && isAuthLoaded && !authState?.authUser.emailVerified) {
         router.push("/");
         router.refresh();
         return;
       }
-    }, [router, authState]);
+    }, [router, authState, isAuthLoaded]);
 
     if (!isAuthLoaded) {
       return <CenterSpinner />;

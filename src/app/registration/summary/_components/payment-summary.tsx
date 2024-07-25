@@ -1,26 +1,24 @@
-import { expectedPayment } from "@/services/payment";
-import React from "react";
-import SummarySection from "./summary-section";
-import SummaryItem from "./summary-item";
 import { toAmount } from "@/lib/utilfuncs";
+import SummaryItem from "./summary-item";
+import SummarySection from "./summary-section";
 
 type PaymentSummaryProps = {
-  isPostgraduate: boolean;
-  workshop: boolean;
+  conferenceAmount: number;
+  workshopAmount: number;
+  isEarlyBird: boolean;
 };
 
-const PaymentSummary = ({ isPostgraduate, workshop }: PaymentSummaryProps) => {
-  const {
-    conference,
-    isEarlyBird,
-    workshop: workshopAmount,
-  } = expectedPayment(isPostgraduate, workshop);
-  const total = conference + workshopAmount;
+const PaymentSummary = ({
+  conferenceAmount,
+  workshopAmount,
+  isEarlyBird,
+}: PaymentSummaryProps) => {
+  const total = conferenceAmount + workshopAmount;
 
   return (
     <SummarySection heading="Payment Info">
       <SummaryItem prompt="Conference">
-        <span>{toAmount(conference)}</span>
+        <span>{toAmount(conferenceAmount)}</span>
         <br />
         <span className="text-muted-foreground text-xs">
           <i>Inclusive of 18% GST and additional ₹150 for TNMC credit points</i>
