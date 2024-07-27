@@ -10,12 +10,14 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { TransactionStatus } from "@/lib/transaction-status";
+import { UserTransactionData } from "@/lib/userTransactionData";
 import { cn } from "@/lib/utils";
 import { ProfileFormData } from "@/schemas/profile";
 import { auth, db } from "@/services/firebase/client";
 import { useStore } from "@/store/useStore";
 import { onAuthStateChanged } from "firebase/auth";
-import { doc, onSnapshot } from "firebase/firestore";
+import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -40,6 +42,8 @@ const Header = () => {
     setMeal,
     setWorkshopLoading,
     setWorkshop,
+    setTransactionLoading,
+    setTransactions,
   } = useStore();
 
   useEffect(() => {
@@ -120,6 +124,38 @@ const Header = () => {
 
     return () => unsubscribe();
   }, [authStore, setWorkshopLoading, setWorkshop]);
+
+  useEffect(() => {
+    setTransactionLoading();
+    const userId = authStore.authState?.authUser.uid;
+    if (userId === undefined) {
+      setTransactions([]);
+      return;
+    }
+    const collectionRef = collection(db, "transactions");
+    const q = query(collectionRef, where("userId", "==", userId));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const transactions: UserTransactionData[] = [];
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data() as {
+          transactionId: string;
+          transactionStatus: TransactionStatus;
+          registrationNumber: string;
+        };
+
+        transactions.push({
+          transactionId: data.transactionId,
+          transactionStatus: data.transactionStatus,
+          regsitrationNumber: data.registrationNumber,
+        });
+      });
+
+      setTransactions(transactions);
+    });
+
+    return () => unsubscribe();
+  }, [authStore, setTransactionLoading, setTransactions]);
 
   const authEmail = authStore.authState?.authUser.email ?? undefined;
   const userRole: Role = authEmail === undefined ? "Guest" : "User";

@@ -1,4 +1,6 @@
 import { type MealPreference } from "@/lib/meal-preference";
+import { TransactionStatus } from "@/lib/transaction-status";
+import { UserTransactionData } from "@/lib/userTransactionData";
 import { ProfileFormData } from "@/schemas/profile";
 import { User } from "firebase/auth";
 import { create } from "zustand";
@@ -31,6 +33,11 @@ type WorkshopStore = {
   };
 };
 
+type TransactionStore = {
+  isLoaded: boolean;
+  transactionState: UserTransactionData[];
+};
+
 type Store = {
   authStore: AuthStore;
   isAuthLoaded: () => boolean;
@@ -51,6 +58,10 @@ type Store = {
   isWorkshopLoaded: () => boolean;
   setWorkshopLoading: () => void;
   setWorkshop: (state?: { workshopId: string }) => void;
+
+  transactionStore: TransactionStore;
+  setTransactionLoading: () => void;
+  setTransactions: (state: UserTransactionData[]) => void;
 };
 
 export const useStore = create<Store>()((set, get) => ({
@@ -138,6 +149,25 @@ export const useStore = create<Store>()((set, get) => ({
       workshopStore: {
         isLoaded: true,
         workshopState: state,
+      },
+    })),
+
+  transactionStore: {
+    isLoaded: false,
+    transactionState: [],
+  },
+  setTransactionLoading: () =>
+    set(() => ({
+      transactionStore: {
+        isLoaded: false,
+        transactionState: [],
+      },
+    })),
+  setTransactions: (data) =>
+    set(() => ({
+      transactionStore: {
+        isLoaded: true,
+        transactionState: data,
       },
     })),
 }));

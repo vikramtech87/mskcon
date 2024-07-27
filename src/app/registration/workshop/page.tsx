@@ -10,13 +10,14 @@ import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import WorkshopOptions from "./_components/workshop-options";
+import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
+import useWorkshopOccupied from "@/hooks/useWorkshopOccupied";
 
 type WorkshopPageProps = {} & WithAuthProps;
 
 const WorkshopPage = ({ auth }: WorkshopPageProps) => {
-  const { isLoaded: isMealLoaded, mealState } = useStore(
-    (state) => state.mealStore
-  );
+  const { mealStore } = useStore();
+  const { isLoaded: isMealLoaded, mealState } = mealStore;
 
   const router = useRouter();
   const [isBusy, setIsBusy] = useState(false);
@@ -28,6 +29,10 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
     }
   }, [isMealLoaded, mealState, router]);
 
+  const isTransactionLoaded = useRedirectIfPaid();
+
+  const { isLoading: isSeatLoading, workshopSeats } = useWorkshopOccupied();
+
   const handleSubmit = async (workshopId: string) => {
     setIsBusy(true);
     const result = await saveWorkshopPreference(auth.authUser.uid, workshopId);
@@ -37,7 +42,7 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
     router.refresh();
   };
 
-  if (!isMealLoaded) {
+  if (!isMealLoaded || !isTransactionLoaded || isSeatLoading) {
     return <CenterSpinner />;
   }
 
@@ -46,6 +51,7 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
       options={getAllWorkshopOptions()}
       isBusy={isBusy}
       onSubmit={handleSubmit}
+      occupied={workshopSeats}
     />
   );
 };

@@ -11,12 +11,14 @@ import { useStore } from "@/store/useStore";
 type WorkshopOptionsProps = {
   options: WorkshopData[];
   isBusy: boolean;
+  occupied: Record<string, number>;
   onSubmit: (workshopId: string) => void;
 };
 
 const WorkshopOptions = ({
   options,
   isBusy,
+  occupied,
   onSubmit,
 }: WorkshopOptionsProps) => {
   const [selectedOption, setSelectedOption] = useState<string | undefined>(
@@ -33,6 +35,19 @@ const WorkshopOptions = ({
     setSelectedOption(workshopState.workshopId);
   }, [workshopState]);
 
+  useEffect(() => {
+    if (selectedOption === "ws-none" || selectedOption === undefined) {
+      return;
+    }
+
+    const selected = options.filter((w) => w.workshopId === selectedOption);
+    const seatsRemaining =
+      selected[0].totalSeats - (occupied[selectedOption] ?? 0);
+    if (seatsRemaining === 0) {
+      setSelectedOption(undefined);
+    }
+  }, [occupied, selectedOption, setSelectedOption]);
+
   const disabled = selectedOption === undefined || isBusy;
 
   return (
@@ -41,17 +56,21 @@ const WorkshopOptions = ({
       description="Please select your preconference workshop preference"
     >
       <ul className="flex flex-col space-y-4">
-        {options.map((option) => (
-          <WorkshopOption
-            key={option.workshopId}
-            description={option.description}
-            seatsLeft={option.totalSeats}
-            title={option.title}
-            workshopId={option.workshopId}
-            isSelected={option.workshopId === selectedOption}
-            onClick={() => setSelectedOption(option.workshopId)}
-          />
-        ))}
+        {options.map((option) => {
+          const seatsOccupied = occupied[option.workshopId] ?? 0;
+          const seatsLeft = option.totalSeats - seatsOccupied;
+          return (
+            <WorkshopOption
+              key={option.workshopId}
+              description={option.description}
+              seatsLeft={seatsLeft}
+              title={option.title}
+              workshopId={option.workshopId}
+              isSelected={option.workshopId === selectedOption}
+              onClick={() => setSelectedOption(option.workshopId)}
+            />
+          );
+        })}
       </ul>
       <FormAction>
         <LoadingButton

@@ -1,6 +1,7 @@
 "use client";
 
 import CenterSpinner from "@/components/center-spinner";
+import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
 import WithAuth, { WithAuthProps } from "@/hooks/withAuth";
 import { useStore } from "@/store/useStore";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,8 @@ const NextPage = ({ auth: { authUser } }: NextPageProps) => {
 
   const { profileStore, mealStore, workshopStore } = useStore();
 
+  const isTransactionLoaded = useRedirectIfPaid();
+
   useEffect(() => {
     if (!authUser.emailVerified) {
       router.push("/auth/verify-email");
@@ -23,7 +26,11 @@ const NextPage = ({ auth: { authUser } }: NextPageProps) => {
     const { isLoaded: isMealLoaded, mealState } = mealStore;
     const { isLoaded: isWorkshopLoaded, workshopState } = workshopStore;
 
-    const isLoaded = isProfileLoaded && isMealLoaded && isWorkshopLoaded;
+    const isLoaded =
+      isProfileLoaded &&
+      isMealLoaded &&
+      isWorkshopLoaded &&
+      isTransactionLoaded;
 
     if (!isLoaded) {
       return;
@@ -46,7 +53,14 @@ const NextPage = ({ auth: { authUser } }: NextPageProps) => {
 
     router.push("/registration/profile");
     return;
-  }, [router, authUser, profileStore, mealStore, workshopStore]);
+  }, [
+    router,
+    authUser,
+    profileStore,
+    mealStore,
+    workshopStore,
+    isTransactionLoaded,
+  ]);
 
   return <CenterSpinner message="Determining your next step" />;
 };

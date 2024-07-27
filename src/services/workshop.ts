@@ -3,6 +3,7 @@ import { WorkshopData } from "@/lib/workshop-data";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { db } from "./firebase/client";
 import { docExists } from "@/lib/utilfuncs";
+import { WorkshopError } from "@/lib/errors/workshopError";
 
 export const getAllWorkshopOptions = () => [
   {
@@ -10,20 +11,20 @@ export const getAllWorkshopOptions = () => [
     description:
       "Feast your eyes on a plethora of gross specimens wiht corresponding histopathology",
     workshopId: "ws-gross",
-    totalSeats: 10,
+    totalSeats: 3,
   },
   {
     title: "FISH & PCR",
     description: "Learn to interpret FISH/PCR in bone and soft tissue tumors",
     workshopId: "ws-fish",
-    totalSeats: 10,
+    totalSeats: 3,
   },
   {
     title: "Musculoskeletal radiology",
     description:
       "Understand the basics of interpreting Musculoskeletal radiology",
     workshopId: "ws-radiology",
-    totalSeats: 10,
+    totalSeats: 3,
   },
   {
     title: "None",
@@ -99,6 +100,44 @@ export const saveWorkshopPreference = async (
   return wrapInResult(
     setDoc(docToWrite, { ...data, createdAt: serverTimestamp() })
   );
+};
+
+export const confirmWorkshopSelection = async (
+  userId: string
+): Promise<Result<void, WorkshopError>> => {
+  const docToWrite = doc(db, "workshop", userId);
+  const existsResult = await workshopExists(userId);
+
+  if (!existsResult.ok) {
+    return {
+      ok: false,
+      error: new WorkshopError("workshop-error/fetch-error"),
+    };
+  }
+
+  if (existsResult.value !== true) {
+    return {
+      ok: false,
+      error: new WorkshopError("workshop-error/not-exists"),
+    };
+  }
+
+  try {
+    await setDoc(
+      docToWrite,
+      { confirmed: true, updatedAt: serverTimestamp() },
+      { merge: true }
+    );
+    return {
+      ok: true,
+      value: undefined,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      error: new WorkshopError("workshop-error/update-error"),
+    };
+  }
 };
 
 const workshopExists = async (

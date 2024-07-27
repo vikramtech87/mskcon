@@ -5,6 +5,7 @@ import FormAction from "@/components/form-action";
 import FormCard from "@/components/form-card";
 import ListItem from "@/components/list-item";
 import LoadingButton from "@/components/loading-button";
+import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
 import { saveMealPreference } from "@/services/meal";
 import { useStore } from "@/store/useStore";
 import { Drumstick, Leaf } from "lucide-react";
@@ -22,6 +23,7 @@ const MealsPage = () => {
     undefined
   );
   const [isBusy, setIsBusy] = useState(false);
+  const isTransactionLoaded = useRedirectIfPaid();
 
   const handleSubmit = async () => {
     const { isLoaded, authState } = authStore;
@@ -49,7 +51,7 @@ const MealsPage = () => {
     }
   }, [mealStore, setMealState]);
 
-  if (!profileStore.isLoaded) {
+  if (!profileStore.isLoaded || !isTransactionLoaded) {
     return <CenterSpinner />;
   }
 

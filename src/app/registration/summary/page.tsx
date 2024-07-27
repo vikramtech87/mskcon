@@ -14,6 +14,7 @@ import PaymentModeSelector from "./_components/payment-mode";
 import PaymentSummary from "./_components/payment-summary";
 import ProfileSummary from "./_components/profile-summary";
 import WorkshopSummary from "./_components/workshop-summary";
+import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
 
 type SummaryPageProps = {} & WithAuthProps;
 
@@ -61,7 +62,13 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
     router,
   ]);
 
-  if (!workshopStore.isLoaded || paymentInfo === undefined) {
+  const isTransactionLoaded = useRedirectIfPaid();
+
+  if (
+    !isTransactionLoaded ||
+    !workshopStore.isLoaded ||
+    paymentInfo === undefined
+  ) {
     return <CenterSpinner />;
   }
 
