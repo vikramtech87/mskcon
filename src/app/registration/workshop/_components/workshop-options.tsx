@@ -3,22 +3,20 @@
 import FormAction from "@/components/form-action";
 import FormCard from "@/components/form-card";
 import LoadingButton from "@/components/loading-button";
-import { WorkshopData } from "@/lib/workshop-data";
+import { WorkshopSeatData } from "@/lib/workshop-data";
+import { useStore } from "@/store/useStore";
 import { useEffect, useState } from "react";
 import WorkshopOption from "./workshop-option";
-import { useStore } from "@/store/useStore";
 
 type WorkshopOptionsProps = {
-  options: WorkshopData[];
+  options: WorkshopSeatData[];
   isBusy: boolean;
-  occupied: Record<string, number>;
   onSubmit: (workshopId: string) => void;
 };
 
 const WorkshopOptions = ({
   options,
   isBusy,
-  occupied,
   onSubmit,
 }: WorkshopOptionsProps) => {
   const [selectedOption, setSelectedOption] = useState<string | undefined>(
@@ -41,12 +39,11 @@ const WorkshopOptions = ({
     }
 
     const selected = options.filter((w) => w.workshopId === selectedOption);
-    const seatsRemaining =
-      selected[0].totalSeats - (occupied[selectedOption] ?? 0);
+    const seatsRemaining = selected[0].seatsLeft;
     if (seatsRemaining === 0) {
       setSelectedOption(undefined);
     }
-  }, [occupied, selectedOption, setSelectedOption]);
+  }, [selectedOption, setSelectedOption, options]);
 
   const disabled = selectedOption === undefined || isBusy;
 
@@ -57,13 +54,11 @@ const WorkshopOptions = ({
     >
       <ul className="flex flex-col space-y-4">
         {options.map((option) => {
-          const seatsOccupied = occupied[option.workshopId] ?? 0;
-          const seatsLeft = option.totalSeats - seatsOccupied;
           return (
             <WorkshopOption
               key={option.workshopId}
               description={option.description}
-              seatsLeft={seatsLeft}
+              seatsLeft={option.seatsLeft}
               title={option.title}
               workshopId={option.workshopId}
               isSelected={option.workshopId === selectedOption}

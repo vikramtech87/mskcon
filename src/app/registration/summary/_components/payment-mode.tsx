@@ -8,6 +8,9 @@ import { fetchPaymentLink } from "@/services/api";
 import { useState } from "react";
 import { usePaymentStateReducer } from "../_hooks/usePaymentState";
 import { saveTransaction } from "@/services/transaction";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/components/ui/button";
 
 type PaymentModeSelectorProps = {
   isPostgraduate: boolean;
@@ -15,6 +18,7 @@ type PaymentModeSelectorProps = {
   registerNumber: string;
   name: string;
   userId: string;
+  workshopSeatsLeft: number;
 };
 
 const PaymentModeSelector = ({
@@ -23,6 +27,7 @@ const PaymentModeSelector = ({
   registerNumber,
   name,
   userId,
+  workshopSeatsLeft,
 }: PaymentModeSelectorProps) => {
   const [paymentMode, setPaymentMode] = useState<PaymentMode | undefined>(
     undefined
@@ -101,13 +106,25 @@ const PaymentModeSelector = ({
         </ListItem>
       </ul>
       <FormAction>
-        <LoadingButton
-          isLoading={buttonState.isLoading}
-          disabled={buttonState.buttonDisabled}
-          onClick={handleClick}
-        >
-          {buttonState.buttonText}
-        </LoadingButton>
+        {workshopSeatsLeft > 0 && (
+          <LoadingButton
+            isLoading={buttonState.isLoading}
+            disabled={buttonState.buttonDisabled}
+            onClick={handleClick}
+          >
+            {buttonState.buttonText}
+          </LoadingButton>
+        )}
+        {workshopSeatsLeft < 1 && (
+          <Link
+            href="/registration/workshop"
+            className={cn(
+              buttonVariants({ variant: "default", size: "default" })
+            )}
+          >
+            Change workshop selection
+          </Link>
+        )}
       </FormAction>
     </div>
   );

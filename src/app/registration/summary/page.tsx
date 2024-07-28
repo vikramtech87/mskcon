@@ -15,6 +15,7 @@ import PaymentSummary from "./_components/payment-summary";
 import ProfileSummary from "./_components/profile-summary";
 import WorkshopSummary from "./_components/workshop-summary";
 import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
+import useWorkshop from "@/hooks/useWorkshop";
 
 type SummaryPageProps = {} & WithAuthProps;
 
@@ -64,10 +65,13 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
 
   const isTransactionLoaded = useRedirectIfPaid();
 
+  const { isLoading: isWorkshopSeatsLoading, workshopSeats } = useWorkshop();
+
   if (
     !isTransactionLoaded ||
     !workshopStore.isLoaded ||
-    paymentInfo === undefined
+    paymentInfo === undefined ||
+    isWorkshopSeatsLoading
   ) {
     return <CenterSpinner />;
   }
@@ -80,10 +84,15 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
     return <CenterSpinner />;
   }
 
-  const workshopData = getWorkshopData(workshopState.workshopId);
-  if (workshopData === undefined) {
-    throw new Error("Invalid workshop id");
+  const selectedWorkshopData = workshopSeats.filter(
+    (w) => w.workshopId === workshopState.workshopId
+  );
+
+  if (selectedWorkshopData.length < 1) {
+    throw new Error(`Invalid workshop id: ${workshopState.workshopId}`);
   }
+
+  const workshopData = selectedWorkshopData[0];
 
   const { firstName, lastName, registerNumber } = profileState;
   const name = `${firstName} ${lastName}`;
@@ -108,6 +117,7 @@ const SummaryPage = ({ auth }: SummaryPageProps) => {
           name={name}
           registerNumber={registerNumber}
           userId={auth.authUser.uid}
+          workshopSeatsLeft={workshopData.seatsLeft}
         />
       </div>
     </FormCard>

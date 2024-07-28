@@ -4,4 +4,5 @@ export type UserTransactionData = {
   transactionId: string;
   transactionStatus: TransactionStatus;
   regsitrationNumber: string;
+  amount: number;
 };

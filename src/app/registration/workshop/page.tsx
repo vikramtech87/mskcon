@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import WorkshopOptions from "./_components/workshop-options";
 import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
-import useWorkshopOccupied from "@/hooks/useWorkshopOccupied";
+import useWorkshop from "@/hooks/useWorkshop";
 
 type WorkshopPageProps = {} & WithAuthProps;
 
@@ -31,7 +31,7 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
 
   const isTransactionLoaded = useRedirectIfPaid();
 
-  const { isLoading: isSeatLoading, workshopSeats } = useWorkshopOccupied();
+  const { isLoading: isSeatLoading, workshopSeats } = useWorkshop();
 
   const handleSubmit = async (workshopId: string) => {
     setIsBusy(true);
@@ -48,10 +48,9 @@ const WorkshopPage = ({ auth }: WorkshopPageProps) => {
 
   return (
     <WorkshopOptions
-      options={getAllWorkshopOptions()}
+      options={workshopSeats}
       isBusy={isBusy}
       onSubmit={handleSubmit}
-      occupied={workshopSeats}
     />
   );
 };

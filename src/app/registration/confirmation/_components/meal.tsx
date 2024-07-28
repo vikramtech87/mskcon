@@ -1,14 +1,14 @@
-import { MealPreference } from "@/lib/meal-preference";
-import React from "react";
-import { Drumstick, Leaf } from "lucide-react";
-import SummarySection from "@/components/summary-section";
 import SummaryItem from "@/components/summary-item";
+import SummarySection from "@/components/summary-section";
+import { MealPreference } from "@/lib/meal-preference";
+import { Drumstick, Leaf } from "lucide-react";
+import React from "react";
 
-type MealSummaryProps = {
+type MealProps = {
   preference: MealPreference;
 };
 
-const MealSummary = ({ preference }: MealSummaryProps) => {
+const Meal = ({ preference }: MealProps) => {
   const icon =
     preference === "veg" ? (
       <Leaf size="14" className="text-green-500" />
@@ -19,7 +19,7 @@ const MealSummary = ({ preference }: MealSummaryProps) => {
   const mp = preference === "veg" ? "Vegetarian" : "Non-vegetarian";
 
   return (
-    <SummarySection heading="Meal Preference" editLink="/registration/meals">
+    <SummarySection heading="Meal Preference">
       <SummaryItem prompt="Preference">
         <div className="flex gap-2 items-center">
           <span>{mp}</span>
@@ -30,4 +30,4 @@ const MealSummary = ({ preference }: MealSummaryProps) => {
   );
 };
 
-export default MealSummary;
+export default Meal;

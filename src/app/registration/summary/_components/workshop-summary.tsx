@@ -1,13 +1,20 @@
-import { WorkshopData } from "@/lib/workshop-data";
-import React from "react";
-import SummarySection from "./summary-section";
-import SummaryItem from "./summary-item";
+import { WorkshopSeatData } from "@/lib/workshop-data";
+import SummarySection from "@/components/summary-section";
+import SummaryItem from "@/components/summary-item";
 
 type WorkshopSummaryProps = {
-  selectedWorkshop: WorkshopData;
+  selectedWorkshop: WorkshopSeatData;
 };
 
 const WorkshopSummary = ({ selectedWorkshop }: WorkshopSummaryProps) => {
+  let warningMessage =
+    "Workshop seat confirmation is subject to availability at the time of payment";
+
+  if (selectedWorkshop.seatsLeft === 0) {
+    warningMessage =
+      "The workshop you selected is full. Your selection needs to be modified";
+  }
+
   return (
     <SummarySection
       heading="Workshop details"
@@ -16,12 +23,9 @@ const WorkshopSummary = ({ selectedWorkshop }: WorkshopSummaryProps) => {
       <SummaryItem prompt="Workshop">{selectedWorkshop.title}</SummaryItem>
       {selectedWorkshop.workshopId !== "ws-none" && (
         <SummaryItem prompt="Seats left">
-          <span>10</span>
+          <span>{selectedWorkshop.seatsLeft}</span>
           <br />
-          <span className="text-red-600 text-xs">
-            Workshop seat confirmation is subject to availability at the time of
-            payment
-          </span>
+          <span className="text-red-600 text-xs">{warningMessage}</span>
         </SummaryItem>
       )}
     </SummarySection>

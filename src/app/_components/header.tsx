@@ -142,12 +142,14 @@ const Header = () => {
           transactionId: string;
           transactionStatus: TransactionStatus;
           registrationNumber: string;
+          amount: number;
         };
 
         transactions.push({
           transactionId: data.transactionId,
           transactionStatus: data.transactionStatus,
           regsitrationNumber: data.registrationNumber,
+          amount: data.amount,
         });
       });
 

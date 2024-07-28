@@ -114,37 +114,6 @@ export const updateTransaction = async ({
   }
 };
 
-// export const getTransactions = async (
-//   userId: string
-// ): Promise<Result<UserTransactionData[], TransactionError>> => {
-//   const q = query(transactionsRef, where("userId", "==", userId));
-//   try {
-//     const qSnap = await getDocs(q);
-
-//     const data: UserTransactionData[] = qSnap.docs.map((doc) => {
-//       const { transactionId, transactionStatus } = doc.data() as {
-//         transactionId: string;
-//         transactionStatus: TransactionStatus;
-//       };
-
-//       return {
-//         transactionId,
-//         transactionStatus,
-//       };
-//     });
-
-//     return {
-//       ok: true,
-//       value: data,
-//     };
-//   } catch (error) {
-//     return {
-//       ok: false,
-//       error: new TransactionError("transaction-data/fetch-error"),
-//     };
-//   }
-// };
-
 export const saveTransaction = async ({
   userId,
   transactionId,

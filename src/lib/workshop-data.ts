@@ -4,3 +4,7 @@ export type WorkshopData = {
   description: string;
   totalSeats: number;
 };
+
+export type WorkshopSeatData = WorkshopData & {
+  seatsLeft: number;
+};

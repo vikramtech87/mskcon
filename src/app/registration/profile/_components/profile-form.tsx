@@ -30,9 +30,14 @@ import React, { useState } from "react";
 type ProfileFormProps = {
   profileState?: ProfileFormData;
   authUserId: string;
+  authEmail: string;
 };
 
-const ProfileForm = ({ profileState, authUserId }: ProfileFormProps) => {
+const ProfileForm = ({
+  profileState,
+  authEmail,
+  authUserId,
+}: ProfileFormProps) => {
   const form = useProfileForm(profileState);
 
   const { handleSubmit, control, watch } = form;
@@ -43,7 +48,7 @@ const ProfileForm = ({ profileState, authUserId }: ProfileFormProps) => {
 
   const [isBusy, formHandler] = useFormHandler(
     async (formData: ProfileFormData) => {
-      await saveProfile(authUserId, formData);
+      await saveProfile(authUserId, authEmail, formData);
       router.push("/registration/next");
       router.refresh();
       return true;

@@ -12,6 +12,7 @@ export type UserProfile = ProfileFormData & {
 
 export const saveProfile = async (
   userId: string,
+  email: string,
   data: ProfileFormData
 ): Promise<Result<void, any>> => {
   const documentToWrite = doc(db, "profile", userId);
@@ -42,6 +43,7 @@ export const saveProfile = async (
   return wrapInResult(
     setDoc(documentToWrite, {
       ...data,
+      email,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
       registerNumber: regNum,

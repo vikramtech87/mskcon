@@ -1,12 +1,14 @@
+import { WorkshopData, WorkshopSeatData } from "@/lib/workshop-data";
 import { db } from "@/services/firebase/client";
+import { getAllWorkshopOptions } from "@/services/workshop";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-const useWorkshopOccupied = () => {
+const workshopData: WorkshopData[] = getAllWorkshopOptions();
+
+const useWorkshop = () => {
   const [isLoading, setIsLoading] = useState(true);
-  const [workshopSeats, setWorkshopSeats] = useState<Record<string, number>>(
-    {}
-  );
+  const [workshopSeats, setWorkshopSeats] = useState<WorkshopSeatData[]>([]);
 
   useEffect(() => {
     const collectionRef = collection(db, "workshop");
@@ -27,7 +29,14 @@ const useWorkshopOccupied = () => {
         seats[workshopId] = seats[workshopId] + 1;
       });
 
-      setWorkshopSeats(seats);
+      const seatsData: WorkshopSeatData[] = workshopData.map((w) => {
+        const occupied = seats[w.workshopId] ?? 0;
+        return {
+          ...w,
+          seatsLeft: Math.max(0, w.totalSeats - occupied),
+        };
+      });
+      setWorkshopSeats(seatsData);
       setIsLoading(false);
     });
 
@@ -40,4 +49,4 @@ const useWorkshopOccupied = () => {
   };
 };
 
-export default useWorkshopOccupied;
+export default useWorkshop;

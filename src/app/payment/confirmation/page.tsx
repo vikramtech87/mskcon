@@ -90,7 +90,7 @@ const PaymentConfirmationPage = ({ auth }: PaymentConfirmationPageProps) => {
     };
 
     fetchData();
-  }, [registrationNumber, transactionId]);
+  }, [registrationNumber, transactionId, router, userId]);
 
   if (statusState === "Failure") {
     return (

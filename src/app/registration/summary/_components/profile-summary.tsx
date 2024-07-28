@@ -1,7 +1,7 @@
 import { ProfileFormData } from "@/schemas/profile";
 import React from "react";
-import SummaryItem from "./summary-item";
-import SummarySection from "./summary-section";
+import SummarySection from "@/components/summary-section";
+import SummaryItem from "@/components/summary-item";
 
 type ProfileSummaryProps = {
   data: ProfileFormData;

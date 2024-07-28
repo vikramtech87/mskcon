@@ -11,7 +11,7 @@ import useRedirectIfPaid from "@/hooks/useRedirectIfPaid";
 type ProfilePageProps = {} & WithAuthProps;
 
 const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
-  const { profileStore, transactionStore } = useStore();
+  const { profileStore } = useStore();
 
   const { profileState, isLoaded: isProfileLoaded } = profileStore;
   const isTransactionLoaded = useRedirectIfPaid();
@@ -20,7 +20,13 @@ const ProfilePage = ({ auth: { authUser } }: ProfilePageProps) => {
     return <CenterSpinner />;
   }
 
-  return <ProfileForm authUserId={authUser.uid} profileState={profileState} />;
+  return (
+    <ProfileForm
+      authUserId={authUser.uid}
+      authEmail={authUser.email!}
+      profileState={profileState}
+    />
+  );
 };
 
 export default WithAuth(ProfilePage, true);
