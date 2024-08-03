@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "set NEXT_PUBLIC_APP_ENV=emulator&&next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "emulate": "firebase emulators:start --import=./fb-data --export-on-exit=./fb-data"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.6.0",

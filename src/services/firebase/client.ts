@@ -1,6 +1,6 @@
 import { FirebaseApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 
 const currentApps = getApps();
 
@@ -20,7 +20,12 @@ if (currentApps.length === 0) {
   app = currentApps[0];
 }
 
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Use emulator in development
+if (process.env.NEXT_PUBLIC_APP_ENV === "emulator") {
+  connectFirestoreEmulator(db, "127.0.0.1", 8080);
+}
+
+export { auth, db };
