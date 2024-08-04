@@ -2,6 +2,7 @@ import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
 import React from "react";
+import HomeCta from "./home-cta";
 
 const Workshop = () => {
   return (
@@ -35,11 +36,7 @@ const Workshop = () => {
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
           />
         </div>
-        <div className="text-center">
-          <Button>
-            <div className="flex items-center px-2">Get started</div>
-          </Button>
-        </div>
+        <HomeCta prompt="Hurry! Only limited seats available" />
       </div>
     </Container>
   );

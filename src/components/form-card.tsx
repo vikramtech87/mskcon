@@ -22,13 +22,15 @@ const FormCard: React.FC<FormCardProps> = ({
 }) => {
   return (
     <FormContainer>
-      <Card className="mt-4 sm:mt-20">
-        <CardHeader>
-          <CardTitle className="text-2xl sm:text-3xl">{title}</CardTitle>
-          {description && <CardDescription>{description}</CardDescription>}
-        </CardHeader>
-        <CardContent>{children}</CardContent>
-      </Card>
+      <div className="py-4 sm:pt-20">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl sm:text-3xl">{title}</CardTitle>
+            {description && <CardDescription>{description}</CardDescription>}
+          </CardHeader>
+          <CardContent>{children}</CardContent>
+        </Card>
+      </div>
     </FormContainer>
   );
 };

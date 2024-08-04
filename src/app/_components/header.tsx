@@ -21,6 +21,8 @@ import { collection, doc, onSnapshot, query, where } from "firebase/firestore";
 import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import NavCta from "./nav-cta";
+import useUserProgress from "@/hooks/useUserProgress";
 
 type Role = "Guest" | "User";
 
@@ -172,12 +174,12 @@ const Header = () => {
       url: "/",
       key: "home",
     },
-    {
-      label: "Schedule",
-      roles: everyOne,
-      url: "/schedule",
-      key: "schedule",
-    },
+    // {
+    //   label: "Schedule",
+    //   roles: everyOne,
+    //   url: "/schedule",
+    //   key: "schedule",
+    // },
     {
       label: "Contact Us",
       roles: everyOne,
@@ -190,12 +192,12 @@ const Header = () => {
       url: "/accomodation",
       key: "accomodation",
     },
-    {
-      label: "Posters",
-      roles: onlyUser,
-      url: "/registration/profile",
-      key: "posters",
-    },
+    // {
+    //   label: "Posters",
+    //   roles: onlyUser,
+    //   url: "/registration/profile",
+    //   key: "posters",
+    // },
   ];
 
   const filteredResources = resources.filter((resource) =>
@@ -272,6 +274,7 @@ const MobileNav = ({
 
 const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
   const isAuthenticated = authEmail !== undefined;
+  const userProgress = useUserProgress();
 
   if (!isAuthLoaded) {
     return <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />;
@@ -298,16 +301,23 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
   return (
     <ul className="flex flex-col space-y-4">
       <li className="text-muted-foreground">{authEmail}</li>
+      {userProgress === "Completed" && (
+        <li>
+          <Link href="/registration/confirmation">Registration details</Link>
+        </li>
+      )}
+      {userProgress === "Progress" && (
+        <li>
+          <Link
+            href="/registration/next"
+            className={buttonVariants({ variant: "default" })}
+          >
+            Continue registration
+          </Link>
+        </li>
+      )}
       <li>
         <Link href="/auth/logout">Logout</Link>
-      </li>
-      <li>
-        <Link
-          href="/registration/next"
-          className={buttonVariants({ variant: "default" })}
-        >
-          Continue registration
-        </Link>
       </li>
     </ul>
   );
@@ -347,6 +357,7 @@ const DesktopNav = ({
 
 const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
   const isAuthenticated = authEmail !== undefined;
+  const userProgress = useUserProgress();
 
   if (!isAuthLoaded) {
     return <Loader2 className="h-4 w-4 text-muted-foreground animate-spin" />;
@@ -373,12 +384,7 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
   return (
     <div className="flex space-x-4">
       <div className="hidden md:block">
-        <Link
-          href="/registration/next"
-          className={cn(buttonVariants({ variant: "default", size: "sm" }))}
-        >
-          Complete registration
-        </Link>
+        <NavCta />
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger>
@@ -387,11 +393,20 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
         <DropdownMenuContent>
           <DropdownMenuLabel>{authEmail}</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="md:hidden">
-            <Link className="block w-full" href="/registration/next">
-              Complete registration
-            </Link>
-          </DropdownMenuItem>
+          {userProgress === "Progress" && (
+            <DropdownMenuItem className="md:hidden">
+              <Link className="block w-full" href="/registration/next">
+                Complete registration
+              </Link>
+            </DropdownMenuItem>
+          )}
+          {userProgress === "Completed" && (
+            <DropdownMenuItem>
+              <Link className="block w-full" href="/registration/confirmation">
+                Registration details
+              </Link>
+            </DropdownMenuItem>
+          )}
           <DropdownMenuItem>
             <Link className="block w-full" href="/auth/logout">
               Logout
