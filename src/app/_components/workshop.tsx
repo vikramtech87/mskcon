@@ -3,42 +3,40 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock } from "lucide-react";
 import React from "react";
 import HomeCta from "./home-cta";
+import SectionContainer from "./section-container";
 
 const Workshop = () => {
   return (
-    <Container>
-      <div className="py-8 sm:py-12 space-y-4 sm:space-y-8 text-center">
-        <h2 className="text-3xl sm:text-4xl">Pre-conference Workshop</h2>
-        <div className="flex flex-col gap-4 sm:flex-row sm:justify-around">
-          <div className="flex gap-2 items-center">
-            <Calendar />
-            5th December 2024
-          </div>
-          <div className="flex gap-2 items-center">
-            <Clock />
-            01:00 PM to 05:00 PM
-          </div>
+    <SectionContainer title="Preconference Workshops">
+      <div className="flex flex-col gap-4 sm:flex-row sm:justify-around">
+        <div className="flex gap-2 items-center">
+          <Calendar />
+          5th December 2024
         </div>
-        <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
-          <WorkshopCard
-            imageUrl="https://picsum.photos/300/200"
-            title="Gross specimens"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
-          />
-          <WorkshopCard
-            imageUrl="https://picsum.photos/600/400"
-            title="FISH/PCR"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
-          />
-          <WorkshopCard
-            imageUrl="https://picsum.photos/900/600"
-            title="Radiology"
-            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
-          />
+        <div className="flex gap-2 items-center">
+          <Clock />
+          01:00 PM to 05:00 PM
         </div>
-        <HomeCta prompt="Hurry! Only limited seats available" />
       </div>
-    </Container>
+      <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+        <WorkshopCard
+          imageUrl="https://picsum.photos/300/200"
+          title="Gross specimens"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+        />
+        <WorkshopCard
+          imageUrl="https://picsum.photos/600/400"
+          title="FISH/PCR"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+        />
+        <WorkshopCard
+          imageUrl="https://picsum.photos/900/600"
+          title="Radiology"
+          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+        />
+      </div>
+      <HomeCta prompt="Hurry! Only limited seats available" />
+    </SectionContainer>
   );
 };
 
