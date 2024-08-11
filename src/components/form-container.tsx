@@ -5,9 +5,7 @@ type FormContainerProps = {
 };
 
 const FormContainer: React.FC<FormContainerProps> = ({ children }) => {
-  return (
-    <div className=" max-w-md w-full mx-auto px-2 sm:px-0">{children}</div>
-  );
+  return <div className="max-w-md w-full mx-auto px-2 sm:px-0">{children}</div>;
 };
 
 export default FormContainer;

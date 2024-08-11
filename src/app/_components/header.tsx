@@ -10,9 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import useUserProgress from "@/hooks/useUserProgress";
 import { TransactionStatus } from "@/lib/transaction-status";
 import { UserTransactionData } from "@/lib/userTransactionData";
-import { cn } from "@/lib/utils";
 import { ProfileFormData } from "@/schemas/profile";
 import { auth, db } from "@/services/firebase/client";
 import { useStore } from "@/store/useStore";
@@ -22,7 +22,6 @@ import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import NavCta from "./nav-cta";
-import useUserProgress from "@/hooks/useUserProgress";
 
 type Role = "Guest" | "User";
 
@@ -191,6 +190,12 @@ const Header = () => {
       roles: everyOne,
       url: "/accomodation",
       key: "accomodation",
+    },
+    {
+      label: "Guidelines",
+      roles: everyOne,
+      key: "guidelines",
+      url: "/guidelines",
     },
     // {
     //   label: "Posters",

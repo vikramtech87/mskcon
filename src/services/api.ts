@@ -8,6 +8,7 @@ import { PaymentStatusResponse } from "@/schemas/paymentStatusResponse";
 import { SoapPaymentTransactionStatusSchema } from "@/schemas/soapPaymentStatus";
 import { ZodSchema } from "zod";
 import { getTransactionDetails } from "./transaction";
+import { PaymentDataResponseSchema } from "@/schemas/paymentDataResponse";
 
 const basePath = process.env.NEXT_PUBLIC_BaseUrl!;
 const apiPath = `${basePath}/api`;
@@ -63,6 +64,9 @@ export const fetchPaymentInfo = async (data: {
 }) =>
   await postApiRequest("payment-invoice", data, PaymentInvoiceResponseSchema);
 
+export const fetchPaymentData = async () =>
+  await getApiRequest("payment-data", PaymentDataResponseSchema);
+
 export const fetchPaymentLink = async (data: {
   isPostgraduate: boolean;
   isWorkshop: boolean;
@@ -71,17 +75,38 @@ export const fetchPaymentLink = async (data: {
   registerNumber: string;
 }) => await postApiRequest("payment-link", data, ApiPaymentLinkSchema);
 
+const getApiRequest = async <TResponse>(
+  segment: string,
+  schema: ZodSchema<TResponse>
+): Promise<Result<TResponse, ApiError>> => {
+  const url = `${apiPath}/${segment}`;
+
+  const promise = fetch(url);
+  const result = await resolveFetch(promise, schema);
+  return result;
+};
+
 const postApiRequest = async <T extends {}, U>(
   segment: string,
   body: T,
   schema: ZodSchema<U>
 ): Promise<Result<U, ApiError>> => {
   const url = `${apiPath}/${segment}`;
+  const promise = fetch(url, {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  const result = await resolveFetch(promise, schema);
+  return result;
+};
+
+const resolveFetch = async <TResponse>(
+  responsePromise: Promise<Response>,
+  schema: ZodSchema<TResponse>
+): Promise<Result<TResponse, ApiError>> => {
   try {
-    const response = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
+    const response = await responsePromise;
 
     if (response.status !== 200) {
       return {

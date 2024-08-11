@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Header from "./_components/header";
 import "./globals.css";
 import Footer from "./_components/footer";
+import { cn } from "@/lib/utils";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Header />
-        <div className="min-h-[calc(100vh-52px-55px)]">{children}</div>
+      <body
+        className={cn(
+          "min-h-screen flex-col flex justify-between",
+          inter.className
+        )}
+      >
+        <div>
+          <Header />
+          <div>{children}</div>
+          <Toaster />
+        </div>
         <Footer />
-        <Toaster />
       </body>
     </html>
   );
