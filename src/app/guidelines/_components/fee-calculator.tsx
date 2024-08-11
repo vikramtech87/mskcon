@@ -122,7 +122,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
             </Dd>
           </DItem>
           <DItem>
-            <Dt>Are you a postgraduate?</Dt>
+            <Dt>Are you a Postgraduate?</Dt>
             <Dd>
               <Switch
                 checked={isPostgraduate}
@@ -131,7 +131,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
             </Dd>
           </DItem>
           <DItem>
-            <Dt>Are yoy attending workshop?</Dt>
+            <Dt>Are you attending workshop?</Dt>
             <Dd>
               <Switch
                 checked={isWorkshop}

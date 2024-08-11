@@ -9,7 +9,7 @@ const Hero = () => {
         <Container>
           <div className="py-16 md:pt-64 md:pb-32 xl:pt-96 xl:pb-64 space-y-16">
             <h1 className="text-4xl md:text-6xl text-center">
-              Bone and Soft tisse Oncopathology Conference
+              Bone and Soft tissue Oncopathology Conference
             </h1>
             <div className="flex flex-col items-center sm:flex-row gap-4 sm:justify-between">
               <div className="flex gap-2 text-lg">
