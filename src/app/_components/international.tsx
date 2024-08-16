@@ -6,29 +6,35 @@ const International = () => {
   return (
     <div className="bg-slate-100">
       <SectionContainer title="International faculties">
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-y-4 gap-x-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-6 gap-x-4">
           <Faculty
-            imageUrl="/images/faculties/int1.jpg"
-            name="Dr Jason Hornick"
-            info="Brigham and Women's hospital, Boston"
+            imageUrl="/images/faculties/rita.jpg"
+            name="Dr Rita Alaggio"
+            info="Professor, Bambino Gesu Childrens Hosp IRCCS, Pathology Unit, Rome, Italy with expertise in  pediatric onco pathology and special interest in soft tissue tumors;  member of the expert editorial board for World Health Organization (WHO) Classification of Paediatric Tumors."
             isDark={true}
           />
           <Faculty
-            imageUrl="/images/faculties/int2.jpg"
+            imageUrl="/images/faculties/jason.jpg"
+            name="Dr Jason L. Hornick"
+            info="Director of Surgical Pathology and Immunohistochemistry at Brigham and Women's Hospital, Professor of Pathology at Harvard Medical School, and Consultant at the Dana-Farber Cancer Institute with expertise in soft tissue, GI and endocrine pathology; member of the expert editorial board for 5th (2020) edition of the WHO Classification of Tumors of Soft Tissue and Bone."
+            isDark={true}
+          />
+          <Faculty
+            imageUrl="/images/faculties/meera.jpg"
             name="Dr Meera Hameed"
-            info="MSKCC, New York"
+            info="Chief of Surgical Pathology Service, Attending Pathologist, Memorial Sloan Kettering Cancer Centre with  expertise in surgical pathology with special focus on Bone and Soft Tissue, molecular pathology, digital pathology and clinical cytogenetics."
             isDark={true}
           />
           <Faculty
-            imageUrl="/images/faculties/int3.jpg"
+            imageUrl="/images/faculties/fiona.jpeg"
             name="Dr Fiona Maclean"
-            info="Douglass Hanly Moir Pathology, Sydney"
+            info="Clinical Associate Professor and Anatomical Pathologist at Douglass Hanly Moir Pathology with expertise in Bone and Soft tissue pathology, Genitourinary pathology, Cytopathology and Artificial Intelligence in pathology."
             isDark={true}
           />
           <Faculty
-            imageUrl="/images/faculties/int4.jpg"
+            imageUrl="/images/faculties/judith.jpg"
             name="Dr Judith Thangaiah"
-            info="Mayo Clinic, Rochester"
+            info="Senior Associate Consultant, Mayo clinic with special interest in Bone and Soft tissue pathology and Cytopathology."
             isDark={true}
           />
         </div>

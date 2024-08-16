@@ -16,18 +16,20 @@ const Faculty = ({ name, imageUrl, info, isDark }: FacultyProps) => {
     "p-2": true,
     "rounded-full": true,
     shadow: true,
+    border: true,
+    "border-gray-300": true,
   });
 
   return (
-    <div className="flex flex-col px-1">
-      <div>
+    <div className="flex flex-col px-1 bg-white rounded-md mt-16 border border-gray-300">
+      <div className="-m-16">
         <div className={avatarBorder}>
           <img src={imageUrl} className="object-cover rounded-full w-32" />
         </div>
       </div>
-      <div>
+      <div className="px-4 pb-4 pt-16">
         <div className="font-medium">{name}</div>
-        <div className="text-muted-foreground text-sm">{info}</div>
+        <div className="text-muted-foreground text-sm pt-2">{info}</div>
       </div>
     </div>
   );

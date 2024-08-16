@@ -247,7 +247,7 @@ const MobileNav = ({
       <Container>
         <nav className="flex flex-col space-y-8 py-2">
           <div className="font-medium text-secondary-foreground flex items-center justify-between">
-            <div>MSKCon</div>
+            <div className="font-bold text-secondary-foreground">BSTCON</div>
             <Button
               variant="ghost"
               className="sm:hidden p-0"
@@ -341,7 +341,7 @@ const DesktopNav = ({
         <nav className="flex items-center justify-between">
           <div className="font-bold text-secondary-foreground">
             <div>
-              <Link href="/">MSKCon</Link>
+              <Link href="/">BSTCON</Link>
             </div>
           </div>
 

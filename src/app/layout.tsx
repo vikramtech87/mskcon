@@ -9,8 +9,9 @@ import { cn } from "@/lib/utils";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "MSKCon",
-  description: "Website for Musculo-skeletal conference 2024",
+  title: "BSTCON",
+  description:
+    "Website for Bone and soft tissue onco-pathology conference 2024",
 };
 
 export default function RootLayout({
