@@ -8,7 +8,7 @@ const National = () => {
     <SectionContainer title="National faculties">
       <FacultyContainer>
         <Faculty
-          imageUrl="/images/faculties/nirmala.jpeg"
+          imageUrl="/images/faculties/nirmala_1.jpeg"
           name="Dr Nirmala Jambhekar"
           info="Professor and former head, Tata Memorial Centre, Mumbai with expertise in Bone and Soft tissue pathology, Lung and Mediastinal tumours."
           isDark={false}
