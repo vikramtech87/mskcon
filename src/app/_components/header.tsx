@@ -180,10 +180,10 @@ const Header = () => {
     //   key: "schedule",
     // },
     {
-      label: "Contact Us",
+      label: "Guidelines",
       roles: everyOne,
-      url: "/contact-us",
-      key: "contact-us",
+      key: "guidelines",
+      url: "/guidelines",
     },
     {
       label: "Accomodation",
@@ -192,11 +192,12 @@ const Header = () => {
       key: "accomodation",
     },
     {
-      label: "Guidelines",
+      label: "Contact Us",
       roles: everyOne,
-      key: "guidelines",
-      url: "/guidelines",
+      url: "/contact-us",
+      key: "contact-us",
     },
+
     // {
     //   label: "Posters",
     //   roles: onlyUser,

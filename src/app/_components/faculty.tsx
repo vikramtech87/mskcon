@@ -17,14 +17,27 @@ const Faculty = ({ name, imageUrl, info, isDark }: FacultyProps) => {
     "rounded-full": true,
     shadow: true,
     border: true,
+    "border-gray-300": isDark,
+    "border-gray-400": !isDark,
+  });
+
+  const box = clsx({
+    flex: true,
+    "flex-col": true,
+    "px-1": true,
+    "bg-white": isDark,
+    "rounded-sm": true,
+    "mt-16": true,
+    "border": true,
     "border-gray-300": true,
+    "bg-slate-100": !isDark,
   });
 
   return (
-    <div className="flex flex-col px-1 bg-white rounded-md mt-16 border border-gray-300">
+    <div className={box}>
       <div className="-m-16">
         <div className={avatarBorder}>
-          <img src={imageUrl} className="object-cover rounded-full w-32" />
+          <img src={imageUrl} className="object-cover rounded-full w-32 h-32" />
         </div>
       </div>
       <div className="px-4 pb-4 pt-16">
