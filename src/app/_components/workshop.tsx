@@ -15,24 +15,29 @@ const Workshop = () => {
         </div>
         <div className="flex gap-2 items-center">
           <Clock />
-          01:00 PM to 05:00 PM
+          01:00 PM to 06:00 PM
         </div>
       </div>
-      <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <WorkshopCard
-          imageUrl="https://picsum.photos/300/200"
-          title="Gross specimens"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+          imageUrl="/images/workshops/gross.png"
+          title="Gross specimens with corresponding histopathology"
+          description="Whether you are a seasoned pathologist or a junior trainee, this workshop with a comprehensive display of diverse spectrum of oncopathology specimens, provides an unparalleled opportunity to elevate your understanding of gross differentials and corresponding histopathology."
         />
         <WorkshopCard
-          imageUrl="https://picsum.photos/600/400"
-          title="FISH/PCR"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+          imageUrl="/images/workshops/radiology.png"
+          title="Basics of Musculoskeletal Radiology"
+          description="Engage with an expert in the field in a dynamic learning environment and delve into the principles and applications of different imaging techniques, with a focus on their specific roles in identifying and assessing bone and soft tissue tumours."
         />
         <WorkshopCard
-          imageUrl="https://picsum.photos/900/600"
-          title="Radiology"
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure eaque quia ratione, pariatur at non quasi, est eius magni blanditiis impedit iusto nihil, maiores libero deserunt quas iste officiis ipsa."
+          imageUrl="/images/workshops/fish.jpg"
+          title="Fluorescence in situ hybridization (FISH)"
+          description="Join us for an informative session on the basics of FISH on solid tumours, designed to provide both theoretical knowledge and practical application, enhancing your proficiency in signal reading and interpretation under the guidance of experienced professionals."
+        />
+        <WorkshopCard
+          imageUrl="/images/workshops/pcr.png"
+          title="Polymerase Chain Reaction (PCR)"
+          description="Grab the opportunity to get a broad and objective understanding of the fundamental principles of PCR technique, including extraction, amplification and the interpretation of results with special emphasis on gel electrophoresis, Sanger’s sequencing and ddPCR."
         />
       </div>
       <HomeCta prompt="Hurry! Only limited seats available" />
@@ -47,7 +52,7 @@ type WorkshopCardProps = {
 };
 const WorkshopCard = ({ imageUrl, title, description }: WorkshopCardProps) => (
   <div className="border rounded shadow">
-    <img src={imageUrl} className="object-cover w-screen rounded-t" />
+    <img src={imageUrl} className="object-cover w-full h-96 sm:h-64 md:h-48 rounded-t" />
     <div className="px-2 md:px-4 py-4 space-y-1 text-left">
       <h4 className="text-lg">{title}</h4>
       <p className="text-md text-muted-foreground">{description}</p>
