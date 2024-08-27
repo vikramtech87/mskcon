@@ -7,30 +7,23 @@ import { WorkshopError } from "@/lib/errors/workshopError";
 
 export const getAllWorkshopOptions = () => [
   {
-    title: "Gross specimens",
-    description:
-      "Feast your eyes on a plethora of gross specimens wiht corresponding histopathology",
-    workshopId: "ws-gross",
-    totalSeats: 3,
-  },
-  {
-    title: "FISH & PCR",
-    description: "Learn to interpret FISH/PCR in bone and soft tissue tumors",
+    title: "Grossing, Radiology and FISH",
+    description: "Learn to interpret grossing, radiology and FISH",
     workshopId: "ws-fish",
-    totalSeats: 3,
+    totalSeats: 20,
   },
   {
-    title: "Musculoskeletal radiology",
+    title: "Grossing, Radiology and PCR",
     description:
-      "Understand the basics of interpreting Musculoskeletal radiology",
-    workshopId: "ws-radiology",
-    totalSeats: 3,
+      "Learn to interpret grossing, radiology and PCR",
+    workshopId: "ws-pcr",
+    totalSeats: 20,
   },
   {
     title: "None",
     description: "Only registering for conference. Not interested in workshop",
     workshopId: "ws-none",
-    totalSeats: 9999,
+    totalSeats: 99999,
   },
 ];
 
