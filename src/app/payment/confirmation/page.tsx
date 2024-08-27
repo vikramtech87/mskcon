@@ -72,12 +72,13 @@ const PaymentConfirmationPage = ({ auth }: PaymentConfirmationPageProps) => {
         return;
       }
 
-      const confirmWorkshopResult = await confirmWorkshopSelection(userId);
-
-      if (!confirmWorkshopResult.ok) {
-        console.error(confirmWorkshopResult.error.code);
-        setStatusState("Failure");
-        return;
+      if (isSuccess) {
+        const confirmWorkshopResult = await confirmWorkshopSelection(userId);
+        if (!confirmWorkshopResult.ok) {
+          console.error(confirmWorkshopResult.error.code);
+          setStatusState("Failure");
+          return;
+        }
       }
 
       if (!transactionStatusResult.value.isSuccess) {
