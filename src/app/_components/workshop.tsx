@@ -21,7 +21,7 @@ const Workshop = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <WorkshopCard
           imageUrl="/images/workshops/gross.png"
-          title="Gross specimens with corresponding histopathology"
+          title="Gross specimens with corresponding Histopathology"
           description="Whether you are a seasoned pathologist or a junior trainee, this workshop with a comprehensive display of diverse spectrum of oncopathology specimens, provides an unparalleled opportunity to elevate your understanding of gross differentials and corresponding histopathology."
         />
         <WorkshopCard
@@ -31,16 +31,26 @@ const Workshop = () => {
         />
         <WorkshopCard
           imageUrl="/images/workshops/fish.jpg"
-          title="Fluorescence in situ hybridization (FISH)"
+          title="Fluorescence in situ Hybridization (FISH)"
           description="Join us for an informative session on the basics of FISH on solid tumours, designed to provide both theoretical knowledge and practical application, enhancing your proficiency in signal reading and interpretation under the guidance of experienced professionals."
         />
         <WorkshopCard
           imageUrl="/images/workshops/pcr.png"
           title="Polymerase Chain Reaction (PCR)"
-          description="Grab the opportunity to get a broad and objective understanding of the fundamental principles of PCR technique, including extraction, amplification and the interpretation of results with special emphasis on gel electrophoresis, Sanger’s sequencing and ddPCR."
+          description="Grab the opportunity to get a basic and objective understanding of the fundamental principles of PCR technique, including extraction, amplification and the interpretation of results with special emphasis on gel electrophoresis, Sanger’s sequencing and ddPCR."
         />
       </div>
-      <HomeCta prompt="Hurry! Only limited seats available" />
+      <div className="flex flex-col space-y-4 max-w-md w-full mx-auto text-muted-foreground">
+        <div className="text-center text-sm">
+          All 40 participants can attend the Gross and Radiology segments of the
+          workshop. At registration kindly choose either FISH or PCR in the
+          Molecular<sup>*</sup> segment (20 seats each)
+        </div>
+        <div className="text-xs">
+          <sup>*</sup>Sponsored by DIAMOnDs, Department of Health research
+        </div>
+        <HomeCta prompt="Hurry! Only limited seats available" />
+      </div>
     </SectionContainer>
   );
 };
@@ -52,7 +62,10 @@ type WorkshopCardProps = {
 };
 const WorkshopCard = ({ imageUrl, title, description }: WorkshopCardProps) => (
   <div className="border rounded shadow">
-    <img src={imageUrl} className="object-cover w-full h-96 sm:h-64 md:h-48 rounded-t" />
+    <img
+      src={imageUrl}
+      className="object-cover w-full h-96 sm:h-64 md:h-48 rounded-t"
+    />
     <div className="px-2 md:px-4 py-4 space-y-1 text-left">
       <h4 className="text-lg">{title}</h4>
       <p className="text-md text-muted-foreground">{description}</p>

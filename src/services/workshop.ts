@@ -7,15 +7,14 @@ import { WorkshopError } from "@/lib/errors/workshopError";
 
 export const getAllWorkshopOptions = () => [
   {
-    title: "Grossing, Radiology and FISH",
+    title: "Gross, Radiology and FISH",
     description: "Learn to interpret grossing, radiology and FISH",
     workshopId: "ws-fish",
     totalSeats: 20,
   },
   {
-    title: "Grossing, Radiology and PCR",
-    description:
-      "Learn to interpret grossing, radiology and PCR",
+    title: "Gross, Radiology and PCR",
+    description: "Learn to interpret grossing, radiology and PCR",
     workshopId: "ws-pcr",
     totalSeats: 20,
   },

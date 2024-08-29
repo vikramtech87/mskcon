@@ -76,12 +76,17 @@ const accomodationData: AccomodationData[] = [
     distance: 11,
     link: "https://maps.app.goo.gl/B3LSvvLvxbACDMj39",
   },
+  {
+    name: "CHTC  (Contact No. 93455 69682)",
+    distance: 0.3,
+    link: "https://maps.app.goo.gl/hqGGDRpBAZ4VcWeH8",
+  },
 ];
 
 const AccomodationPage = () => {
   return (
     <PageContainer title="Accomodation">
-      <div>
+      <div className="border rounded w-full max-w-md mx-auto">
         {accomodationData.map((data) => (
           <AccomodationItem data={data} key={data.name} />
         ))}
@@ -99,7 +104,7 @@ const AccomodationItem = ({
 }: AccomodationItemProps) => {
   return (
     <>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-4 py-4">
         <div>
           <div className="font-medium">{name}</div>
           <div className="text-muted-foreground">
@@ -117,7 +122,7 @@ const AccomodationItem = ({
           </a>
         </div>
       </div>
-      <Separator className="my-4" />
+      <Separator />
     </>
   );
 };

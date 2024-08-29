@@ -173,17 +173,23 @@ const Header = () => {
       url: "/",
       key: "home",
     },
-    // {
-    //   label: "Schedule",
-    //   roles: everyOne,
-    //   url: "/schedule",
-    //   key: "schedule",
-    // },
+    {
+      label: "Schedule",
+      roles: everyOne,
+      url: "/schedule",
+      key: "schedule",
+    },
     {
       label: "Guidelines",
       roles: everyOne,
       key: "guidelines",
       url: "/guidelines",
+    },
+    {
+      label: "Posters",
+      roles: everyOne,
+      key: "posters",
+      url: "/posters",
     },
     {
       label: "Accomodation",

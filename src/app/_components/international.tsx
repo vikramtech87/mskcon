@@ -11,19 +11,19 @@ const International = () => {
           <Faculty
             imageUrl="/images/faculties/rita.jpg"
             name="Dr Rita Alaggio"
-            info="Professor, Bambino GesuChildrens Hosp IRCCS, Pathology Unit, Rome, Italy with expertise in pediatric-oncopathology and special interest in Soft tissue tumors; member of the expert editorial board for World Health Organization (WHO) Classification of Paediatric Tumors."
+            info="Professor, Bambino Gesu Childrens Hosp IRCCS, Pathology Unit, Rome, Italy, with expertise in pediatric-oncopathology and special interest in Soft tissue tumors; expert member of editorial board for World Health Organization (WHO) Classification of Paediatric Tumors."
             isDark={true}
           />
           <Faculty
             imageUrl="/images/faculties/jason.jpg"
             name="Dr Jason L. Hornick"
-            info="Director of Surgical Pathology and Immunohistochemistry at Brigham and Women&#39;s Hospital, Professor of Pathology at Harvard Medical School, and Consultant at the Dana-Farber Cancer Institute with expertise in soft tissue, GI and endocrine pathology; member of the expert editorial board for 5th (2020) edition of the WHO Classification of Tumors of Soft Tissue and Bone."
+            info="Director of Surgical Pathology and Immunohistochemistry at Brigham and Women&#39;s Hospital, Professor of Pathology at Harvard Medical School, and Consultant at the Dana-Farber Cancer Institute with expertise in soft tissue, GI and endocrine pathology; expert member editorial board for 5th (2020) edition of the WHO Classification of Tumors of Soft Tissue and Bone."
             isDark={true}
           />
           <Faculty
             imageUrl="/images/faculties/meera.jpg"
             name="Dr Meera Hameed"
-            info="Chief of Surgical Pathology Service, Attending Pathologist, Memorial Sloan Kettering Cancer Centrewith expertise in surgical pathology with special focus on Bone and Soft Tissue, molecular pathology, digital pathology and clinical cytogenetics."
+            info="Chief of Surgical Pathology Service, Attending Pathologist, Memorial Sloan Kettering Cancer Centre with expertise in surgical pathology and special focus on Bone and Soft Tissue, molecular pathology, digital pathology and clinical cytogenetics."
             isDark={true}
           />
           <Faculty

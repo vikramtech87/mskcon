@@ -10,7 +10,7 @@ const National = () => {
         <Faculty
           imageUrl="/images/faculties/nirmala_1.jpeg"
           name="Dr Nirmala Jambhekar"
-          info="Professor and former head, Tata Memorial Centre, Mumbai with expertise in Bone and Soft tissue pathology, Lung and Mediastinal tumours."
+          info="Professor and former head, Tata Memorial Hospital, Mumbai with expertise in Bone and Soft tissue pathology, Lung and Mediastinal tumours."
           isDark={false}
         />
         <Faculty
@@ -22,7 +22,7 @@ const National = () => {
         <Faculty
           imageUrl="/images/faculties/rekhi.png"
           name="Dr Bharat Rekhi"
-          info="Professor, Tata Memorial Centre, Mumbai, with expertise in Soft Tissue and Bone Tumors, Gynaecologic pathology, Molecular Pathology and Cytopathology."
+          info="Professor, Tata Memorial Hospital, Mumbai, with expertise in Bone and Soft tissue pathology, Gynaecologic pathology, Molecular Pathology and Cytopathology."
           isDark={false}
         />
       </FacultyContainer>

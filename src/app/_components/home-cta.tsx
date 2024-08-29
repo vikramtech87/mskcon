@@ -20,7 +20,7 @@ const HomeCta = ({ prompt }: HomeCtaProps) => {
   if (progress === "Register") {
     return (
       <div className="flex flex-col items-center space-y-2">
-        {prompt && <div className="text-xl">{prompt}</div>}
+        {prompt && <div className="text-xl text-foreground">{prompt}</div>}
         <Link
           href="/auth/register"
           className={cn(buttonVariants({ variant: "default" }))}
@@ -34,7 +34,7 @@ const HomeCta = ({ prompt }: HomeCtaProps) => {
   if (progress === "Progress") {
     return (
       <div className="flex flex-col items-center space-y-2">
-        {prompt && <div className="text-xl">{prompt}</div>}
+        {prompt && <div className="text-xl text-foreground">{prompt}</div>}
         <Link
           href="/registration/next"
           className={cn(buttonVariants({ variant: "default" }))}
