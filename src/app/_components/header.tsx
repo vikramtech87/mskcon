@@ -192,10 +192,10 @@ const Header = () => {
       url: "/posters",
     },
     {
-      label: "Accomodation",
+      label: "Accommodation",
       roles: everyOne,
       url: "/accomodation",
-      key: "accomodation",
+      key: "accommodation",
     },
     {
       label: "Contact Us",

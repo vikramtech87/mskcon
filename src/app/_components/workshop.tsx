@@ -7,7 +7,7 @@ import SectionContainer from "./section-container";
 
 const Workshop = () => {
   return (
-    <SectionContainer title="Preconference Workshops">
+    <SectionContainer title="Preconference Workshop">
       <div className="flex flex-col gap-4 sm:flex-row sm:justify-around">
         <div className="flex gap-2 items-center">
           <Calendar />
@@ -22,7 +22,7 @@ const Workshop = () => {
         <WorkshopCard
           imageUrl="/images/workshops/gross.png"
           title="Gross specimens with corresponding Histopathology"
-          description="Whether you are a seasoned pathologist or a junior trainee, this workshop with a comprehensive display of diverse spectrum of oncopathology specimens, provides an unparalleled opportunity to elevate your understanding of gross differentials and corresponding histopathology."
+          description="Whether you are a seasoned pathologist or a junior trainee, this workshop with a comprehensive display of diverse spectrum of oncopathology specimens, provides an unparalleled opportunity."
         />
         <WorkshopCard
           imageUrl="/images/workshops/radiology.png"

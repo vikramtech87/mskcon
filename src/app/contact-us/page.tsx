@@ -10,7 +10,7 @@ const ContactUsPage = () => {
         <ContactItem prompt="Payment" value="finance.bstp2024@gmail.com" />
         <ContactItem prompt="Posters" value="posters.bstp2024@gmail.com" />
         <ContactItem
-          prompt="Accomodation"
+          prompt="Accommodation"
           value="transport.bstp2024@gmail.com"
         />
         <ContactItem

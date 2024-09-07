@@ -113,7 +113,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
       <div className="">
         <dl className="divide-y divide-y-gray-100">
           <DItem>
-            <Dt>Registering on or before Sep 31?</Dt>
+            <Dt>Registering on or before Sep 30?</Dt>
             <Dd>
               <Switch
                 checked={isEarlyBird}

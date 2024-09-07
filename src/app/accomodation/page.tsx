@@ -76,20 +76,38 @@ const accomodationData: AccomodationData[] = [
     distance: 11,
     link: "https://maps.app.goo.gl/B3LSvvLvxbACDMj39",
   },
-  {
-    name: "CHTC  (Contact No. 93455 69682)",
-    distance: 0.3,
-    link: "https://maps.app.goo.gl/hqGGDRpBAZ4VcWeH8",
-  },
 ];
 
 const AccomodationPage = () => {
   return (
-    <PageContainer title="Accomodation">
+    <PageContainer title="Accommodation">
       <div className="border rounded w-full max-w-md mx-auto">
         {accomodationData.map((data) => (
           <AccomodationItem data={data} key={data.name} />
         ))}
+        <div className="flex items-center justify-between px-4 py-4">
+          <div>
+            <div className="font-medium">CHTC</div>
+            <div className="text-muted-foreground">Contact No. 93455 69682</div>
+            <div className="text-muted-foreground">
+              To be booked before 31st October, 2024
+            </div>
+            <div className="text-muted-foreground">
+              <span>0.3 km from venue</span>
+            </div>
+          </div>
+          <div>
+            <a
+              target="_blank"
+              href="https://maps.app.goo.gl/hqGGDRpBAZ4VcWeH8"
+              className="text-muted-foreground hover:text-primary"
+              rel="noopener noreferrer"
+            >
+              <MapIcon />
+            </a>
+          </div>
+        </div>
+        <Separator />
       </div>
     </PageContainer>
   );

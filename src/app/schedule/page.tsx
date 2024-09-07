@@ -22,7 +22,43 @@ const SchedulePage = () => {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="day1">
-          <ScheduleList listData={pre_rows} day="December 5" />
+          <div className="flex flex-col space-y-4 mt-4 sm:mt-2">
+            <div className="sm:hidden text-center font-medium uppercase">
+              December 5
+            </div>
+            <div className="border rounded text-sm">
+              <div className="md:hidden">
+                <div className="flex flex-col space-y-2 px-2 py-4 text-muted-foreground">
+                  <div>01:00 - 06:00 PM</div>
+                  <div>
+                    <div className="font-semibold text-lg text-foreground">
+                      Preconference Workshop
+                    </div>
+                    <div className="text-base text-foreground">
+                      Gross, Radiology and FISH / PCR
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <Separator />
+              </div>
+              <div className="hidden md:block text-sm text-muted-foreground">
+                <div className="grid grid-cols-6 p-4 gap-6  items-center">
+                  <div className="text-right text-xs">01:00 - 06:00 PM</div>
+                  <div className="col-span-3">
+                    <div className="text-foreground font-semibold">
+                      Preconference Workshop
+                    </div>
+                    <div className="text-foreground">
+                      Gross, Radiology and FISH / PCR
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+                <Separator />
+              </div>
+            </div>
+          </div>
         </TabsContent>
         <TabsContent value="day2">
           <ScheduleList listData={day1_rows} day="December 6" />
