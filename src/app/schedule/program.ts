@@ -1,5 +1,12 @@
 import { ScheduleRow } from "./schedule-row";
 
+export const pre_rows: ScheduleRow[] = [
+  {
+    time: "01:00 - 06:00 PM",
+    topic: "Pre-conference Worksop",
+  },
+];
+
 export const day1_rows: ScheduleRow[] = [
   {
     time: "08:00 - 09:00 AM",
@@ -13,7 +20,7 @@ export const day1_rows: ScheduleRow[] = [
   {
     time: "09:30 - 10:15 AM",
     topic:
-      "Recent and emerging entities, novel histochemical markers and concepts in soft tissue pathology",
+      "Recent and emerging entities, novel immunohistochemical markers and concepts in soft tissue tumours",
     faculty: "Dr Bharat Rekhi",
   },
   {
@@ -27,8 +34,8 @@ export const day1_rows: ScheduleRow[] = [
   {
     time: "10:45 - 11:30 AM",
     topic:
-      "Emerging entities and recent concepts in pediatric soft tissue tumours",
-    faculty: "Dr. Rita Alaggio",
+      "Emerging entities and recent concepts in paediatric soft tissue tumours",
+    faculty: "Dr Rita Alaggio",
   },
   {
     time: "11:30 - 11:40 AM",
@@ -45,7 +52,7 @@ export const day1_rows: ScheduleRow[] = [
   },
   {
     time: "01:30 - 03:30 PM",
-    topic: "Clinico-pathological case discussion",
+    topic: "Clinico-pathological panel discussion",
     faculty: "Multidisciplinary team",
   },
   {
@@ -54,7 +61,7 @@ export const day1_rows: ScheduleRow[] = [
   },
   {
     time: "03:50 - 04:40 PM",
-    topic: "Giant cell rich lesions and recent advances in bone pathology",
+    topic: "Giant cell rich bone lesions and recent advances in bone tumours",
     faculty: "Dr Meera Hameed (virtual)",
   },
   {
@@ -80,7 +87,7 @@ export const day2_rows: ScheduleRow[] = [
   },
   {
     time: "09:00 - 09:45 AM",
-    topic: "Approach to vascular lesions in soft tissue",
+    topic: "Classification and approach to vascular lesions in soft tissue",
     faculty: "Dr Judith Thangaiah",
   },
   {
@@ -95,18 +102,18 @@ export const day2_rows: ScheduleRow[] = [
   },
   { time: "10:20 - 10:40 AM", topic: "Tea break" },
   {
-    time: "10:40 - 11:20 AM",
+    time: "10:40 - 11:30 AM",
     topic:
-      "Recent advances in ancillary techniques in bone and soft tissue pathology",
+      "Recent advances in ancillary techniques in bone and soft tissue tumours",
     faculty: "Dr Fiona Maclean (virtual)",
   },
-  { time: "11:20 - 11:30 AM", topic: "Interesting case" },
+  { time: "11:30 - 11:40 AM", topic: "Interesting case" },
   {
-    time: "11:30 - 01:00 PM",
+    time: "11:40 - 01:10 PM",
     topic: "Live slide seminar",
     faculty: "Dr Rita Alaggio, Dr Bharat Rekhi & Dr Judith Thangaiah",
   },
-  { time: "01:00 - 02.00 PM", topic: "Lunch" },
+  { time: "01:10 - 02.00 PM", topic: "Lunch" },
   {
     time: "02:00 - 03.00 PM",
     topic:
