@@ -19,11 +19,7 @@ const PostersPage = () => {
           Registration for the main conference is mandatory for abstract
           submission.
         </li>
-        <li>
-          Each participant can submit more than 1 abstract; however, only 1
-          abstract per participant will be accepted for paper and/or poster
-          category.
-        </li>
+        <li>Each participant can submit only one abstract per category.</li>
         <li>
           The abstract must provide an informative summary of the research work
           and should be strictly on the subject/topic pertaining to Bone and
@@ -51,7 +47,7 @@ const PostersPage = () => {
         </li>
         <li>
           Abstracts will be reviewed and participants will be informed about the
-          category (paper/poster) by email, for offline presentation only.
+          category (paper/poster) by email.
         </li>
         <li>
           The abstract for the poster/paper should be structured with the
@@ -73,8 +69,8 @@ const PostersPage = () => {
           </ul>
         </li>
         <li>
-          Only word files to be uploaded. The abstract should be typed in Times
-          New Roman 12. Only title to be in bold.
+          Only word files to be uploaded. The abstract should be typed in font
+          Times New Roman and size 12. Only title to be in bold.
         </li>
         <li>
           Certification: Participation certificates will be issued to all the

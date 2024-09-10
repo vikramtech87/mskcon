@@ -77,6 +77,10 @@ export const day1_rows: ScheduleRow[] = [
     time: "05:30 - 05:40 PM",
     topic: "Interesting case",
   },
+  {
+    time: "07:00 PM",
+    topic: "Gala dinner",
+  },
 ];
 
 export const day2_rows: ScheduleRow[] = [
@@ -110,7 +114,7 @@ export const day2_rows: ScheduleRow[] = [
   { time: "11:30 - 11:40 AM", topic: "Interesting case" },
   {
     time: "11:40 - 01:10 PM",
-    topic: "Live slide seminar",
+    topic: "Experts at the microscopy",
     faculty: "Dr Rita Alaggio, Dr Bharat Rekhi & Dr Judith Thangaiah",
   },
   { time: "01:10 - 02.00 PM", topic: "Lunch" },

@@ -6,6 +6,9 @@ import { fetchPaymentData } from "@/services/api";
 import clsx from "clsx";
 import { Loader2 } from "lucide-react";
 import React, { useEffect, useReducer, useState } from "react";
+import DItem from "./ditem";
+import Dt from "./dt";
+import Dd from "./dd";
 
 type PaymentDataState = {
   isLoading: boolean;
@@ -113,7 +116,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
       <div className="">
         <dl className="divide-y divide-y-gray-100">
           <DItem>
-            <Dt>Registering on or before Sep 30?</Dt>
+            <Dt>Registering on or before October 31?</Dt>
             <Dd>
               <Switch
                 checked={isEarlyBird}
@@ -159,41 +162,6 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
       </div>
     </section>
   );
-};
-
-type ItemProps = {
-  children: React.ReactNode;
-};
-
-const DItem = ({ children }: ItemProps) => {
-  return <div className="px-4 py-6 grid grid-cols-4 gap-4">{children}</div>;
-};
-
-type DtProps = {
-  children: React.ReactNode;
-  isFooter?: boolean;
-};
-
-const Dt = ({ children, isFooter }: DtProps) => {
-  const isEm = isFooter ?? false;
-
-  const classList = clsx({
-    "text-sm": true,
-    "font-medium": !isEm,
-    "font-bold": isEm,
-    "leading-6": true,
-    "text-gray-900": !isEm,
-    "col-span-3": true,
-  });
-  return <dt className={classList}>{children}</dt>;
-};
-
-type DdProps = {
-  children: React.ReactNode;
-};
-
-const Dd = ({ children }: DdProps) => {
-  return <dd className="leading-6">{children}</dd>;
 };
 
 export default FeeCalculator;
