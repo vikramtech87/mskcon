@@ -265,10 +265,12 @@ const MobileNav = ({
           </div>
           {isMobileMenuOpen && (
             <>
-              <ul className="flex flex-col space-y-4">
+              <ul className="flex flex-col space-y-1 divide-y">
                 {filteredResources.map((resource) => (
                   <li key={resource.key}>
-                    <Link href={resource.url}>{resource.label}</Link>
+                    <Link href={resource.url} className="block py-2">
+                      {resource.label}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -311,7 +313,7 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
   }
 
   return (
-    <ul className="flex flex-col space-y-4">
+    <ul className="flex flex-col space-y-2">
       <li className="text-muted-foreground">{authEmail}</li>
       {userProgress === "Completed" && (
         <li>
@@ -329,7 +331,9 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
         </li>
       )}
       <li>
-        <Link href="/auth/logout">Logout</Link>
+        <Link href="/auth/logout" className="block py-2">
+          Logout
+        </Link>
       </li>
     </ul>
   );
