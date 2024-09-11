@@ -114,7 +114,7 @@ export const day2_rows: ScheduleRow[] = [
   { time: "11:30 - 11:40 AM", topic: "Interesting case" },
   {
     time: "11:40 - 01:10 PM",
-    topic: "Experts at the microscopy",
+    topic: "Experts at the microscope",
     faculty: "Dr Rita Alaggio, Dr Bharat Rekhi & Dr Judith Thangaiah",
   },
   { time: "01:10 - 02.00 PM", topic: "Lunch" },

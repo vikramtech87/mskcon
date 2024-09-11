@@ -47,7 +47,8 @@ const Workshop = () => {
           Molecular<sup>*</sup> segment (20 seats each)
         </div>
         <div className="text-xs">
-          <sup>*</sup>Sponsored by DIAMOnDs, Department of Health research
+          <sup>*</sup>Sponsored by DHR-ICMR Advanced Molecular Oncology
+          Diagnostic Services (DIAMOnDS) project
         </div>
         <HomeCta prompt="Hurry! Only limited seats available" />
       </div>

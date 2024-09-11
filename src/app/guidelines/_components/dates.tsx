@@ -15,11 +15,15 @@ const Dates = () => {
           </DItem>
           <DItem>
             <Dt>Last date for asbtract submission</Dt>
-            <Dd>October 15</Dd>
+            <Dd>October 21</Dd>
           </DItem>
           <DItem>
             <Dt>Last date for online registration</Dt>
             <Dd>November 30</Dd>
+          </DItem>
+          <DItem>
+            <Dt>Spot registration available</Dt>
+            <Dd>December 6</Dd>
           </DItem>
         </dl>
       </div>
