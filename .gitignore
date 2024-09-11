@@ -39,3 +39,4 @@ next-env.d.ts
 fb-data
 .firebaserc
 firestore.rules
+fire*.log
