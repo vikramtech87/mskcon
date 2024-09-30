@@ -15,7 +15,7 @@ const Workshop = () => {
         </div>
         <div className="flex gap-2 items-center">
           <Clock />
-          01:00 PM to 06:00 PM
+          11:00 AM to 05:00 PM
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">

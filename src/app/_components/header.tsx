@@ -22,6 +22,7 @@ import { Loader2, Menu, User2, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import NavCta from "./nav-cta";
+import React from "react";
 
 type Role = "Guest" | "User";
 

@@ -29,7 +29,7 @@ const SchedulePage = () => {
             <div className="border rounded text-sm">
               <div className="md:hidden">
                 <div className="flex flex-col space-y-2 px-2 py-4 text-muted-foreground">
-                  <div>01:00 - 06:00 PM</div>
+                  <div>11:00 AM - 05:00 PM</div>
                   <div>
                     <div className="font-semibold text-lg text-foreground">
                       Preconference Workshop
@@ -44,7 +44,7 @@ const SchedulePage = () => {
               </div>
               <div className="hidden md:block text-sm text-muted-foreground">
                 <div className="grid grid-cols-6 p-4 gap-6  items-center">
-                  <div className="text-right text-xs">01:00 - 06:00 PM</div>
+                  <div className="text-right text-xs">11:00 AM - 05:00 PM</div>
                   <div className="col-span-3">
                     <div className="text-foreground font-semibold">
                       Preconference Workshop
