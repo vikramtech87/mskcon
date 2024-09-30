@@ -40,3 +40,4 @@ fb-data
 .firebaserc
 firestore.rules
 fire*.log
+firestore-debug.log
