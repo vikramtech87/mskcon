@@ -11,10 +11,13 @@ const Hero = () => {
             <h1 className="text-4xl md:text-6xl text-center">
               Bone and Soft tissue Oncopathology Conference
             </h1>
-            <div className="flex flex-col items-center sm:flex-row gap-4 sm:justify-between">
-              <div className="flex gap-2 text-lg">
+            <div className="flex flex-col items-center sm:flex-row gap-6 sm:justify-between">
+              <div className="flex gap-2 text-lg items-center">
                 <MapPin />
-                <span>Christian Medical College, Vellore</span>
+                <div className="flex flex-col">
+                  <span>New examination hall, Bagayam</span>
+                  <span>Christian Medical College, Vellore</span>
+                </div>
               </div>
               <div className="flex gap-2 text-lg">
                 <Calendar />

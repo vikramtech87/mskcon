@@ -5,6 +5,7 @@ import { day1_rows, day2_rows, pre_rows } from "./program";
 import MobileRow from "./_components/mobile-row";
 import ScheduleList from "./_components/schedule-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { MapPin } from "lucide-react";
 
 const SchedulePage = () => {
   return (
@@ -25,6 +26,12 @@ const SchedulePage = () => {
           <div className="flex flex-col space-y-4 mt-4 sm:mt-2">
             <div className="sm:hidden text-center font-medium uppercase">
               December 5
+            </div>
+            <div className="flex justify-center">
+              <div className="flex items-center gap-2">
+                <MapPin />
+                4th floor ASHA building, CMCH
+              </div>
             </div>
             <div className="border rounded text-sm">
               <div className="md:hidden">

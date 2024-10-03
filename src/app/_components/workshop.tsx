@@ -1,6 +1,6 @@
 import Container from "@/components/container";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock } from "lucide-react";
+import { Calendar, Clock, MapPin } from "lucide-react";
 import React from "react";
 import HomeCta from "./home-cta";
 import SectionContainer from "./section-container";
@@ -16,6 +16,10 @@ const Workshop = () => {
         <div className="flex gap-2 items-center">
           <Clock />
           11:00 AM to 05:00 PM
+        </div>
+        <div className="flex gap-2 items-center">
+          <MapPin />
+          4th floor ASHA building, CMCH
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
