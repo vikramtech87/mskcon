@@ -33,11 +33,20 @@ export default function RootLayout({
         <div>
           <div>
             <Container>
-              <div className="flex items-center gap-4 text-sm p-4 justify-center">
-                <TriangleAlert className="h-4 w-4 text-destructive flex-shrink-0" />
-                <div className="font-medium text-destructive">
-                  The preconference workshop timings have been changed from
-                  01:00 PM to 06:00 PM to 11:00 AM to 05:00 PM
+              <div className="flex flex-col px-1 py-2 gap-2 text-sm">
+                <div className="flex items-center gap-2 justify-center">
+                  <TriangleAlert className="h-4 w-4 text-destructive flex-shrink-0" />
+                  <div className="font-medium text-destructive">
+                    The preconference workshop timings have been changed from
+                    01:00 PM to 06:00 PM to 11:00 AM to 05:00 PM
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 justify-center">
+                  <TriangleAlert className="h-4 w-4 text-destructive flex-shrink-0" />
+                  <div className="font-medium text-destructive">
+                    The deadline for abstract submission has been extended to
+                    November 7, 2024
+                  </div>
                 </div>
               </div>
             </Container>

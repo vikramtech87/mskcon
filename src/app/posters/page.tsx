@@ -37,8 +37,11 @@ const PostersPage = () => {
         </li>
         <li>
           The last date for submission of abstracts is{" "}
-          <strong>
+          <span className="line-through">
             21<sup>st</sup> October, 2024
+          </span>{" "}
+          <strong>
+            7<sup>th</sup> November, 2024
           </strong>
           .
         </li>
