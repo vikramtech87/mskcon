@@ -21,9 +21,9 @@ const International = () => {
             isDark={true}
           />
           <Faculty
-            imageUrl="/images/faculties/judith.jpg"
+            imageUrl="/images/faculties/judith_2.jpg"
             name="Dr Judith Thangaiah"
-            info="Senior Associate Consultant, Mayo clinic, Rochester, Minnesota, USA with expertise in Bone and Soft tissue pathology and Cytopathology."
+            info="Consultant, Mayo clinic, Rochester, Minnesota, USA with expertise in Bone and Soft tissue pathology and Cytopathology."
             isDark={true}
           />
           <Faculty
