@@ -15,7 +15,7 @@ const Dates = () => {
           </DItem>
           <DItem>
             <Dt>Last date for asbtract submission</Dt>
-            <Dd>October 21</Dd>
+            <Dd>November 7</Dd>
           </DItem>
           <DItem>
             <Dt>Last date for online registration</Dt>

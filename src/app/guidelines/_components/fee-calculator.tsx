@@ -68,9 +68,9 @@ type FeeCalculatorProps = {};
 const FeeCalculator = (props: FeeCalculatorProps) => {
   const [state, dispatch] = useReducer(paymentDataReducer, initialState);
 
-  const [isEarlyBird, setIsEarlyBird] = useState(true);
+  const [isEarlyBird, setIsEarlyBird] = useState(false);
   const [isPostgraduate, setIsPostgraduate] = useState(false);
-  const [isWorkshop, setIsWorkshop] = useState(true);
+  const [isWorkshop, setIsWorkshop] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
@@ -121,6 +121,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
               <Switch
                 checked={isEarlyBird}
                 onCheckedChange={(checked) => setIsEarlyBird(checked)}
+                disabled
               />
             </Dd>
           </DItem>
@@ -139,6 +140,7 @@ const FeeCalculator = (props: FeeCalculatorProps) => {
               <Switch
                 checked={isWorkshop}
                 onCheckedChange={(checked) => setIsWorkshop(checked)}
+                disabled
               />
             </Dd>
           </DItem>
