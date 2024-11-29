@@ -82,7 +82,7 @@ const MealsPage = () => {
       <FormAction>
         <LoadingButton
           isLoading={isBusy}
-          disabled={mealState === undefined || isBusy}
+          disabled={true}
           onClick={() => handleSubmit()}
         >
           Update meal selection

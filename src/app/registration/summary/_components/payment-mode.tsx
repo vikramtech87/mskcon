@@ -109,7 +109,7 @@ const PaymentModeSelector = ({
         {workshopSeatsLeft > 0 && (
           <LoadingButton
             isLoading={buttonState.isLoading}
-            disabled={buttonState.buttonDisabled}
+            disabled={true}
             onClick={handleClick}
           >
             {buttonState.buttonText}

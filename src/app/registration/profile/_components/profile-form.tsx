@@ -327,7 +327,7 @@ const ProfileForm = ({
             </div>
           )}
           <div className="flex flex-col gap-4 pt-8">
-            <LoadingButton isLoading={isBusy} disabled={isDisabled}>
+            <LoadingButton isLoading={isBusy} disabled={true}>
               {action}
             </LoadingButton>
           </div>
