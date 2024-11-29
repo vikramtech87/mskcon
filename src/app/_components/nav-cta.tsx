@@ -5,18 +5,18 @@ import Link from "next/link";
 import React from "react";
 
 const NavCta = () => {
-  const progress = useUserProgress();
+  // const progress = useUserProgress();
 
-  if (progress === "Progress") {
-    return (
-      <Link
-        href="/registration/next"
-        className={cn(buttonVariants({ variant: "default", size: "sm" }))}
-      >
-        Complete registration
-      </Link>
-    );
-  }
+  // if (progress === "Progress") {
+  //   return (
+  //     <Link
+  //       href="/registration/next"
+  //       className={cn(buttonVariants({ variant: "default", size: "sm" }))}
+  //     >
+  //       Complete registration
+  //     </Link>
+  //   );
+  // }
 
   return null;
 };
