@@ -1,11 +1,5 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
-import useUserProgress from "@/hooks/useUserProgress";
-import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
-import Link from "next/link";
-
 type HomeCtaProps = {
   prompt?: string;
 };

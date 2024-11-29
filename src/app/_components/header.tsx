@@ -165,7 +165,6 @@ const Header = () => {
   const userRole: Role = authEmail === undefined ? "Guest" : "User";
 
   const everyOne: Set<Role> = new Set(["Guest", "User"] as Role[]);
-  const onlyUser: Set<Role> = new Set(["User"] as Role[]);
 
   const resources: Resource[] = [
     {
@@ -321,7 +320,7 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
           <Link href="/registration/confirmation">Registration details</Link>
         </li>
       )}
-      {userProgress === "Progress" && (
+      {/* {userProgress === "Progress" && (
         <li>
           <Link
             href="/registration/next"
@@ -330,7 +329,7 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
             Continue registration
           </Link>
         </li>
-      )}
+      )} */}
       <li>
         <Link href="/auth/logout" className="block py-2">
           Logout

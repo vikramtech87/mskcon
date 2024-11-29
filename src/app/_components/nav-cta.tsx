@@ -1,9 +1,3 @@
-import { buttonVariants } from "@/components/ui/button";
-import useUserProgress from "@/hooks/useUserProgress";
-import { cn } from "@/lib/utils";
-import Link from "next/link";
-import React from "react";
-
 const NavCta = () => {
   // const progress = useUserProgress();
 
