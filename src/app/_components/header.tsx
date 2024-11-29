@@ -300,14 +300,14 @@ const MobileAuthNav = ({ authEmail, isAuthLoaded }: AuthNavProps) => {
         <li>
           <Link href="/auth/login">Login</Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             href="/auth/register"
             className={buttonVariants({ variant: "default" })}
           >
             Register
           </Link>
-        </li>
+        </li> */}
       </ul>
     );
   }
@@ -385,14 +385,14 @@ const DesktopAuthNav = ({ isAuthLoaded, authEmail }: AuthNavProps) => {
         <li>
           <Link href="/auth/login">Login</Link>
         </li>
-        <li>
+        {/* <li>
           <Link
             href="/auth/register"
             className={buttonVariants({ variant: "default", size: "sm" })}
           >
             Register
           </Link>
-        </li>
+        </li> */}
       </ul>
     );
   }
